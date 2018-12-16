@@ -114,6 +114,7 @@ create table roles
 create table user
 (
    User_Id              int not null auto_increment,
+   Username             varchar(30) not null,
    Address_Id           int,
    Role_Id              int not null,
    User_First_Name      varchar(30) not null,
@@ -122,7 +123,7 @@ create table user
    User_Password        varchar(30) not null,
    User_Phone_Number    varchar(12),
    User_Confirmed       bool,
-   UNIQUE (User_Email, User_Phone_Number),
+   UNIQUE (User_Email, User_Phone_Number, Username),
    primary key (User_Id)
 );
 
@@ -221,29 +222,29 @@ VALUES (2, 'Salesman');
 INSERT INTO roles(Role_Id, Role)  
 VALUES (3, 'Customer');
 
-INSERT INTO user(User_First_Name, User_Last_Name, User_Email, 
+INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id)  
-VALUES ('Janez', 'Novak', 'jn@gmail.com', 'p4ssword', 1);
+VALUES ('janezek', 'Janez', 'Novak', 'jn@gmail.com', 'p4ssword', 1);
 
-INSERT INTO user(User_First_Name, User_Last_Name, User_Email, 
+INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id)  
-VALUES ('Ana', 'Horvat', 'ah@yahoo.com', 'password', 2);
+VALUES ('ana_hrovat', 'Ana', 'Horvat', 'ah@yahoo.com', 'password', 2);
 
-INSERT INTO user(User_First_Name, User_Last_Name, User_Email, 
+INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id)  
-VALUES ('Klara', 'Turk', 'kt@blabla.com', 'password', 2);
+VALUES ('klara_turk', 'Klara', 'Turk', 'kt@blabla.com', 'password', 2);
 
-INSERT INTO user(User_First_Name, User_Last_Name, User_Email, 
+INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id, Address_Id, User_Phone_Number, User_Confirmed) 
-VALUES ('Luka', 'Zorko', 'luka1.zorko@gmail.com', 's4pwv84mhg', 3, 4, '123456789', 1);
+VALUES ('luka1.zorko', 'Luka', 'Zorko', 'luka1.zorko@gmail.com', 's4pwv84mhg', 3, 4, '123456789', 1);
 
-INSERT INTO user(User_First_Name, User_Last_Name, User_Email, 
+INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id, Address_Id, User_Phone_Number, User_Confirmed) 
-VALUES ('Kristjan', 'Reba', 'kristjan.reba96@gmail.com', 'reba', 3, 5, '987654321', 1);
+VALUES ('anon', 'Kristjan', 'Reba', 'kristjan.reba96@gmail.com', 'reba', 3, 5, '987654321', 1);
 
-INSERT INTO user(User_First_Name, User_Last_Name, User_Email, 
+INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id, Address_Id, User_Phone_Number, User_Confirmed) 
-VALUES ('Robert', 'Rajh', 'rr@gmail.com', 'password', 3, 6, '132456789', 0);
+VALUES ('robert_rajh', 'Robert', 'Rajh', 'rr@gmail.com', 'password', 3, 6, '132456789', 0);
 
 INSERT INTO rating(User_Id, Item_Id, Rating)
 VALUES (4, 1, 4);

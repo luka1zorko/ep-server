@@ -1,5 +1,9 @@
 <?php
-require_once 'database_store.php';
+require_once 'db/address.php';
+require_once 'db/item.php';
+require_once 'db/item.php';
+require_once 'db/rating.php';
+require_once 'db/user.php';
 ?>
 <html>
     <head>
@@ -10,7 +14,7 @@ require_once 'database_store.php';
         <h1>All items</h1>
         <?php
         try {
-            $all_items = DBJokes::getAll();
+            $all_items = item::getAll();
         } catch (Exception $e) {
             echo "Prišlo je do napake: {$e->getMessage()}";
         }

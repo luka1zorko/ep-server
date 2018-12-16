@@ -71,6 +71,3 @@
     </div>
     </div>
 </form>
-
-<!--ime priimek email 
-address phone number password-->
