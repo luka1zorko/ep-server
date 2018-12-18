@@ -68,5 +68,17 @@ class user {
         $statement->execute();
 
     }
+    
+    public static function login($username, $password) {
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT COUNT(User_Id) FROM user WHERE "
+                . "Username = :username AND User_Password = :password");
+        $statement->bindValue(":username", $username);
+        $statement->bindValue(":password", $password);
+        $statement->execute();
+
+        return $statement->fetchColumn(0) == 1;
+    }
+    
 }
 
