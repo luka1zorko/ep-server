@@ -1,5 +1,5 @@
 <?php
-    include 'layout.php';
+    include BASE_URL . 'view/layout.php';
 ?> 
 <div style="margin-bottom:10%"></div>   
 <form class="text-center">
