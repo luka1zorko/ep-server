@@ -1,29 +1,50 @@
 <?php
-require_once 'db/address.php';
-require_once 'db/item.php';
-require_once 'db/item.php';
-require_once 'db/rating.php';
-require_once 'db/user.php';
-?>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Store</title>
-    </head>
-    <body>
-        <a href="/netbeans/ep-server/views/item.view.php">item</a>
-        <h1>All items</h1>
-        <?php
-        try {
-            $all_items = item::getAll();
-        } catch (Exception $e) {
-            echo "Prišlo je do napake: {$e->getMessage()}";
-        }
-        foreach ($all_items as $num => $row) {
-            $name = $row["Item_Name"];
-            $price = $row["Item_Price"];
-            echo "<p><b>$name</b>:$price</p>\n";
-        }
-        ?>
-    </body>
-</html>
+
+// enables sessions
+#session_start();
+
+require_once("controller/itemController.php");
+require_once("controller/userController.php");
+require_once("utils.php");
+require_once("view/navbar.php");
+
+define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
+define("IMAGES_URL", rtrim($_SERVER["SCRIPT_NAME"], "index.php") . "resources/images/");
+
+
+$path = isset($_SERVER["PATH_INFO"]) ? trim($_SERVER["PATH_INFO"], "/") : "";
+
+// ROUTER: defines mapping between URLS and controllers
+$urls = [
+    "signin" => function() {
+        UserController::signIn();
+    },
+    "items" => function () {
+        ItemController::index();
+    },
+    "items/add" => function () {
+        ItemController::add();
+    },
+    "items/edit" => function () {
+        ItemController::edit();
+    },
+    "items/delete" => function () {
+        ItemController::delete();
+    },
+    "" => function () {
+        ViewHelper::redirect(BASE_URL . "items");
+    },
+];
+
+try {
+    if (isset($urls[$path])) {
+        $urls[$path]();
+    } else {
+        echo "No controller for '$path'";
+    }
+} catch (InvalidArgumentException $e) {
+    ViewHelper::error404();
+} catch (Exception $e) {
+    echo "An error occurred: <pre>$e</pre>";
+} 
+

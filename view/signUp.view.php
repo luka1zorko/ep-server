@@ -1,6 +1,7 @@
 <?php
-    include 'navbar.view.php';
+    include BASE_URL . 'view/layout.php';
 ?> 
+<div style="margin-bottom:10%"></div>   
 <form class="text-center">
     <h1 class="h3 mb-3 font-weight-normal">Sign up</h1>
     <!--USERNAME PASSWORD-->

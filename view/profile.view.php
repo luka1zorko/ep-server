@@ -1,6 +1,4 @@
-<?php
-    include 'navbar.view.php';
-?>
+
 <div class="container">
 <form action="">
     <!--first name, last name, city, postal code, address-->
