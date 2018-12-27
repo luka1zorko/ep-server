@@ -11,6 +11,7 @@ require_once 'db/user.php';
         <title>Store</title>
     </head>
     <body>
+        <a href="/netbeans/ep-server/views/item.view.php">item</a>
         <h1>All items</h1>
         <?php
         try {

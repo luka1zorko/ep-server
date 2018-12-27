@@ -7,8 +7,8 @@
         <title></title>
     </head>
 
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <body  style="padding: 65px">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
           <a class="navbar-brand" href="">Store</a>
 
           <div class="collapse navbar-collapse" id="navbarSupportedContent">

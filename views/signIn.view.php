@@ -1,5 +1,5 @@
 <?php
-    include 'layout.php';
+    include 'navbar.view.php';
 ?> 
 <div style="margin-bottom:10%"></div>    
 <form class="form-signin text-center">
