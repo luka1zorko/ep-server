@@ -13,19 +13,19 @@ class user {
         return $statement->fetchAll();
     }
     
-    public static function delete($username) {
+    public static function delete($userId) {
         $db = DBInit::getInstance();
 
-        $statement = $db->prepare("DELETE FROM user WHERE Username = :username");
-        $statement->bindParam(":username", $username, PDO::PARAM_STR);
+        $statement = $db->prepare("DELETE FROM user WHERE User_Id = :userId");
+        $statement->bindParam(":userId", $userId, PDO::PARAM_STR);
         $statement->execute();
     }
     
-    public static function get($username) {
+    public static function get($userId) {
         $db = DBInit::getInstance();
 
-        $statement = $db->prepare("SELECT * FROM user WHERE Username =:username");
-        $statement->bindParam(":username", $username);
+        $statement = $db->prepare("SELECT * FROM user WHERE User_Id =:userId");
+        $statement->bindParam(":userId", $userId);
         $statement->execute();
 
         return $statement->fetch();
@@ -71,14 +71,17 @@ class user {
     
     public static function login($username, $password) {
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT COUNT(User_Id) FROM user WHERE "
-                . "Username = :username AND User_Password = :password");
+        $statement = $db->prepare("SELECT * FROM user WHERE "
+                . "Username = :username");
         $statement->bindValue(":username", $username);
-        $statement->bindValue(":password", $password);
         $statement->execute();
-
-        return $statement->fetchColumn(0) == 1;
+        $user =  $statement->fetch();
+        var_dump($user);
+        if(password_verify($password, $user['User_Password']))
+            return $user;
+        else
+            return false;
+                
     }
     
 }
-

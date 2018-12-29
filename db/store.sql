@@ -120,7 +120,7 @@ create table user
    User_First_Name      varchar(30) not null,
    User_Last_Name       varchar(30) not null,
    User_Email           varchar(320) not null,
-   User_Password        varchar(30) not null,
+   User_Password        varchar(255) not null,
    User_Phone_Number    varchar(12),
    User_Confirmed       bool,
    UNIQUE (User_Email, User_Phone_Number, Username),
@@ -224,27 +224,27 @@ VALUES (3, 'Customer');
 
 INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id)  
-VALUES ('janezek', 'Janez', 'Novak', 'jn@gmail.com', 'p4ssword', 1);
+VALUES ('janezek', 'Janez', 'Novak', 'jn@gmail.com', '$2y$10$dnIMSCtE5p3txtmlzYtg6epWx3fFVvmklLSX3zPmu7iVIVXxi08CO', 1);
 
 INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id)  
-VALUES ('ana_hrovat', 'Ana', 'Horvat', 'ah@yahoo.com', 'password', 2);
+VALUES ('ana_horvat', 'Ana', 'Horvat', 'ah@yahoo.com', '$2y$10$D6Xs1.qYfeVU8N3O3eoK1.XEZyCys1.3/efrKRdfhmgesEg1PueZC', 2);
 
 INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id)  
-VALUES ('klara_turk', 'Klara', 'Turk', 'kt@blabla.com', 'password', 2);
+VALUES ('klara_turk', 'Klara', 'Turk', 'kt@blabla.com', '$2y$10$D6Xs1.qYfeVU8N3O3eoK1.XEZyCys1.3/efrKRdfhmgesEg1PueZC', 2);
 
 INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id, Address_Id, User_Phone_Number, User_Confirmed) 
-VALUES ('luka1.zorko', 'Luka', 'Zorko', 'luka1.zorko@gmail.com', 's4pwv84mhg', 3, 4, '123456789', 1);
+VALUES ('luka1.zorko', 'Luka', 'Zorko', 'luka1.zorko@gmail.com', '$2y$10$9ClGDW2HDi1XKMgPD/Zwce/9a28cMeybS/Ypbk4vlap7fTjeeo4le', 3, 4, '123456789', 1);
 
 INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id, Address_Id, User_Phone_Number, User_Confirmed) 
-VALUES ('anon', 'Kristjan', 'Reba', 'kristjan.reba96@gmail.com', 'reba', 3, 5, '987654321', 1);
+VALUES ('anon', 'Kristjan', 'Reba', 'kristjan.reba96@gmail.com', '$2y$10$sQVLOknPqGP5LoscmarRvOGK5p4FEXk9dcAe59/wPtcEd88WPKF46', 3, 5, '987654321', 1);
 
 INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id, Address_Id, User_Phone_Number, User_Confirmed) 
-VALUES ('robert_rajh', 'Robert', 'Rajh', 'rr@gmail.com', 'password', 3, 6, '132456789', 0);
+VALUES ('robert_rajh', 'Robert', 'Rajh', 'rr@gmail.com', '$2y$10$D6Xs1.qYfeVU8N3O3eoK1.XEZyCys1.3/efrKRdfhmgesEg1PueZC', 3, 6, '132456789', 0);
 
 INSERT INTO rating(User_Id, Item_Id, Rating)
 VALUES (4, 1, 4);

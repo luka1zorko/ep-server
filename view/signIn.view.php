@@ -1,6 +1,8 @@
-
+<?php
+require_once("view/navbar.php")
+?>
 <div style="margin-bottom:10%"></div>    
-<form class="form-signin text-center", action="<?= BASE_URL . "signin" ?>" method="post">
+<form class="form-signin text-center" action="<?= BASE_URL . "signin" ?>" method="post">
     <h1 class="h3 mb-3">Please sign in</h1>
     <div class="row">
     <div class="offset-md-4 col-md-4">

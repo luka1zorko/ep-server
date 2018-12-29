@@ -1,3 +1,6 @@
+<?php
+require_once("view/navbar.php")
+?>
 <!DOCTYPE html>
 <meta charset="UTF-8" />
 <title>Library</title>

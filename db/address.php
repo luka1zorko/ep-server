@@ -55,5 +55,25 @@ class address {
         $statement->bindParam(":houseNumberAddon", $houseNumberAddon);
         $statement->execute();
     }
+    
+    public static function resolveAddress($postalCode, $city, $street, $houseNumber, $houseNumberAddon=null){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT Address_Id FROM address WHERE Postal_Code = :postalCode AND City = :city "
+                . "AND Street = :street AND House_Number = :houseNumber AND House_Number_Addon = :houseNumberAddon");
+        $statement->bindParam(":postalCode", $postalCode);
+        $statement->bindParam(":city", $city);
+        $statement->bindParam(":street", $street);
+        $statement->bindParam(":houseNumber", $houseNumber);
+        $statement->bindParam(":houseNumberAddon", $houseNumberAddon);
+        $statement->execute();
+        $addressId =  $statement->fetch();
+        if($addressId){
+            return $addressId;
+        }
+        else{
+            address::insert($postalCode, $city, $street, $houseNumber, $houseNumberAddon);
+            return $db->lastInsertId();
+        }
+    }
 }
 

@@ -1,5 +1,5 @@
 <?php
-    include 'navbar.view.php';
+    include 'navbar.php';
 ?>
 
 <div class="container">
