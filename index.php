@@ -35,16 +35,31 @@ $urls = [
     },
     "profile" => function () {
         userController::profile();
-    },
-    "profile/update" => function () {
-        userController::updateProfile();
-    },            
+    },     
     "signupRedirect" => function () {
         echo ViewHelper::render("view/signUp.view.php");
     },
     "signup" => function () {
         UserController::signUp();
-    },            
+    },
+    "profile/updatePersonalInformation" => function () {
+        UserController::updatePersonalInformation();
+    },
+    "profile/updateAddress" => function () {
+        UserController::updateAddress();
+    },
+    "profile/updatePassword" => function () {
+        UserController::updatePassword();
+    },   
+    "customerListRedirect" => function () {
+        echo ViewHelper::render("view/customerList.view.php");
+    },          
+    "customerList" => function () {
+        UserController::customerList();
+    },
+    "registerSalesman" => function () {
+        UserController::registerSalesman();
+    },  
     "" => function () {
         ViewHelper::redirect(BASE_URL . "items");
     },

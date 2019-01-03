@@ -2,7 +2,7 @@
 
 require_once 'database_init.php';
 
-class user {
+class role {
 
     public static function getAll() {
         $db = DBInit::getInstance();
@@ -18,6 +18,19 @@ class user {
         $statement->bindParam(":roleId", $roleId);
         $statement->execute();
         return $statement->fetch();
+    }
+    
+    public static function idToName($roleId){
+        switch ($roleId){
+            case 1:
+                return "Administrator";
+            case 2:
+                return "Salesman";
+            case 3: 
+                return "Customer";
+            default:
+                return "Invalid input";    
+        }
     }
 }
 

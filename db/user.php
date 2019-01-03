@@ -49,10 +49,10 @@ class user {
         $statement->execute();
     }
 
-    public static function update($username, $roleId, $firstName, $lastName, $email, $password, 
+    public static function update($username, $firstName, $lastName, $email, $password, 
         $phoneNumber=null, $confirmed=null, $addressId=null) {
         $db = DBInit::getInstance();
-        $statement = $db->prepare("UPDATE user SET Username = :username, Role_Id = :roleId, User_First_Name = :firstName, "
+        $statement = $db->prepare("UPDATE user SET Username = :username, User_First_Name = :firstName, "
                 . "User_Last_Name = :lastName, User_Email = :email, User_Password = :password, "
                 . "User_Phone_Number = :phoneNumber, User_Confirmed = :confirmed, Address_Id = :addressId"
                 . " WHERE Username = :username");
@@ -61,7 +61,6 @@ class user {
         $statement->bindParam(":lastName", $lastName);
         $statement->bindParam(":email", $email);
         $statement->bindParam(":password", $password);
-        $statement->bindParam(":roleId", $roleId);
         $statement->bindParam(":addressId", $addressId);
         $statement->bindParam(":phoneNumber", $phoneNumber);
         $statement->bindParam(":confirmed", $confirmed);
@@ -82,6 +81,15 @@ class user {
         else
             return false;
                 
+    }
+    
+    public static function getCustomerList() {
+        $db = DBInit::getInstance();
+
+        $statement = $db->prepare("SELECT * FROM user WHERE Role_Id = 3");
+        $statement->execute();
+
+        return $statement->fetchAll();
     }
     
 }

@@ -1,11 +1,14 @@
 <!DOCTYPE>
 <?php
-    session_start();
+    if(!isset($_SESSION)){
+        session_start();
+    }
 ?>
 <html>
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        <link rel="stylesheet" href="../style.css">
         <title></title>
     </head>
 
@@ -47,7 +50,7 @@
                 </li>
                 <!--Admin-->
                 <li style="display:<?php echo isset($_SESSION['userRole']) && $_SESSION['userRole'] == 1 ? 'block':'none' ?>">
-                    <a class="nav-link" href=""><span class="fas fa-user-plus"></span>&nbsp;Register Salesman</a>
+                    <a class="nav-link" href="<?= BASE_URL . "registerSalesman" ?>"><span class="fas fa-user-plus"></span>&nbsp;Register Salesman</a>
                 </li>
                 <!--Salesman-->
                 <li>
@@ -59,7 +62,7 @@
                 </li>
                 <!--Salesman-->
                 <li style="display:<?php echo isset($_SESSION['userRole']) && ($_SESSION['userRole'] == 1 || $_SESSION['userRole'] == 2) ? 'block':'none' ?>">
-                    <a class="nav-link" href=""><span class="fas fa-users"></span>&nbsp;Customers</a>
+                    <a class="nav-link" href="<?= BASE_URL . "customerListRedirect" ?>"><span class="fas fa-users"></span>&nbsp;Customers</a>
                 </li>
             </ul>
           </div>
