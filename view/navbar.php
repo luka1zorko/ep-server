@@ -52,6 +52,9 @@
                 <li style="display:<?php echo isset($_SESSION['userRole']) && $_SESSION['userRole'] == 1 ? 'block':'none' ?>">
                     <a class="nav-link" href="<?= BASE_URL . "registerSalesman" ?>"><span class="fas fa-user-plus"></span>&nbsp;Register Salesman</a>
                 </li>
+                <li style="display:<?php echo isset($_SESSION['userRole']) && $_SESSION['userRole'] != 3 ? 'block':'none' ?>">
+                    <a class="nav-link" href="<?= BASE_URL . "registerCustomer" ?>"><span class="fas fa-user-plus"></span>&nbsp;Register Customer</a>
+                </li>
                 <!--Salesman-->
                 <li>
                     <a class="nav-link" href=""><span class="far fa-list-alt"></span>&nbsp;Orders</a>
@@ -62,7 +65,7 @@
                 </li>
                 <!--Salesman-->
                 <li style="display:<?php echo isset($_SESSION['userRole']) && ($_SESSION['userRole'] == 1 || $_SESSION['userRole'] == 2) ? 'block':'none' ?>">
-                    <a class="nav-link" href="<?= BASE_URL . "customerListRedirect" ?>"><span class="fas fa-users"></span>&nbsp;Customers</a>
+                    <a class="nav-link" href="<?= BASE_URL . "customerList" ?>"><span class="fas fa-users"></span>&nbsp;Customers</a>
                 </li>
             </ul>
           </div>

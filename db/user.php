@@ -6,16 +6,13 @@ class user {
 
     public static function getAll() {
         $db = DBInit::getInstance();
-
         $statement = $db->prepare("SELECT * FROM user");
         $statement->execute();
-
         return $statement->fetchAll();
     }
     
     public static function delete($userId) {
         $db = DBInit::getInstance();
-
         $statement = $db->prepare("DELETE FROM user WHERE User_Id = :userId");
         $statement->bindParam(":userId", $userId, PDO::PARAM_STR);
         $statement->execute();
@@ -23,7 +20,6 @@ class user {
     
     public static function get($userId) {
         $db = DBInit::getInstance();
-
         $statement = $db->prepare("SELECT * FROM user WHERE User_Id =:userId");
         $statement->bindParam(":userId", $userId);
         $statement->execute();

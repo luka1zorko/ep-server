@@ -122,9 +122,29 @@ class UserController {
         echo ViewHelper::render("view/registerSalesman.view.php");
     }
     
+        public static function registerCustomer(){
+        if(isset($_POST['username'])){
+            $addressId = address::resolveAddress($_POST['postalCode'], $_POST['city'], $_POST['street'], $_POST['houseNumber']);
+            $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+            $roleId = 3;
+            $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
+            $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
+            $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_STRING);
+            $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+            $phoneNumber = filter_input(INPUT_POST, 'phoneNumber', FILTER_SANITIZE_STRING);
+            $confirmed = 1;
+            user::insert($username, $roleId, $firstName, $lastName, $email, $password, $phoneNumber, $confirmed, $addressId);
+        }
+        echo ViewHelper::render("view/registerCustomer.view.php");
+    }
+    
     public static function customerList(){
-        $list = user::getUserList($_GET['role']);
-        echo json_encode($list);
+        if(isset($_GET['role'])){
+            $list = user::getUserList($_GET['role']);
+            echo json_encode($list);
+        }
+        else
+            echo ViewHelper::render("view/customerList.view.php");
     }
     
     public static function toggleConfirmation(){

@@ -4,7 +4,6 @@ require_once("view/navbar.php")
 <script type="text/javascript">
     var BASE_URL = "<?php echo BASE_URL ?>";
     var role = "<?php echo $_SESSION['userRole']?>";
-    var userId = "<?php echo $_SESSION['userId']?>";
 </script>
 <script src="../js/customerList.js"></script>
 <div class="row">

@@ -54,10 +54,7 @@ $urls = [
     },
     "/^profile\/updatePassword$/" => function () {
         UserController::updatePassword();
-    },   
-    "/^customerListRedirect$/" => function () {
-        echo ViewHelper::render("view/customerList.view.php");
-    },          
+    },            
     "/^customerList$/" => function () {
         UserController::customerList();
     },
@@ -66,7 +63,10 @@ $urls = [
     },
     "/^registerSalesman$/" => function () {
         UserController::registerSalesman();
-    },      
+    }, 
+    "/^registerCustomer$/" => function () {
+        UserController::registerCustomer();
+    },   
     "/^$/" => function () {
         ViewHelper::redirect(BASE_URL . "items");
     },
