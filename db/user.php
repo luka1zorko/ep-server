@@ -23,7 +23,14 @@ class user {
         $statement = $db->prepare("SELECT * FROM user WHERE User_Id =:userId");
         $statement->bindParam(":userId", $userId);
         $statement->execute();
-
+        return $statement->fetch();
+    }
+    
+    public static function getByUsername($username) {
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM user WHERE Username =:username");
+        $statement->bindParam(":username", $username);
+        $statement->execute();
         return $statement->fetch();
     }
 

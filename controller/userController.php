@@ -7,19 +7,24 @@ require_once("ViewHelper.php");
 class UserController {
 
     public static function signIn() {
-        $failedAttempt = false;
-        
+        $wrongPassword = false;
+        $notConfirmed = false;
         if (isset($_POST["username"]) && isset($_POST["password"])) {
             try {
-                if ($user = user::login($_POST["username"], $_POST["password"])) {
-                    session_start();
-                    session_regenerate_id(true);
-                    $_SESSION["userId"] = $user['User_Id'];
-                    $_SESSION["userRole"] = $user['Role_Id'];
-                    echo ViewHelper::redirect(BASE_URL . "items");
-                    //var_dump($_SESSION);
-                } else {
-                    $failedAttempt = true;
+                if(user::getByUsername($_POST['username'])['User_Confirmed']){
+                    if ($user = user::login($_POST["username"], $_POST["password"])) {
+                        session_start();
+                        session_regenerate_id(true);
+                        $_SESSION["userId"] = $user['User_Id'];
+                        $_SESSION["userRole"] = $user['Role_Id'];
+                        echo ViewHelper::redirect(BASE_URL . "items");
+                        //var_dump($_SESSION);
+                    } else {
+                        $wrongPassword = true;
+                    }
+                }
+                else{
+                    $notConfirmed = true;
                 }
             } catch (Exception $exc) {
                 echo $exc->getMessage();
@@ -32,11 +37,15 @@ class UserController {
         
         echo ViewHelper::render("view/signIn.view.php");
         
-        if ($failedAttempt) {
-            echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Napačno uporabniško ime in geslo.</b></p></div>,</div>";
+        if($wrongPassword){
+            echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Wrong username and/or password</b></p></div>,</div>";
         }
+        elseif($notConfirmed){
+            echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Account not activated.</b></p></div>,</div>";
+        }
+        
     }
-    
+        
     public static function signUp(){
         $addressId = address::resolveAddress($_POST['postalCode'], $_POST['city'], $_POST['street'], $_POST['houseNumber']);
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
@@ -59,8 +68,8 @@ class UserController {
     
     public static function profile() {
         session_start();
-        $user = user::get($_SESSION["userId"]);
-        if($_SESSION['userRole'] == 3)
+        $user = user::get($_GET["userId"]);
+        if($_GET['role'] == 3)
             $user = array_merge ($user, address::get($user['Address_Id']));
         //var_dump($merge);
         echo ViewHelper::render("view/profile.view.php", $user);
@@ -68,7 +77,7 @@ class UserController {
     
     public static function updatePersonalInformation() {
         session_start();
-        $user = user::get($_SESSION['userId']);
+        $user = user::get($_GET['userId']);
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
         $lastName = filter_input(INPUT_POST, 'lastName', FILTER_SANITIZE_STRING);
@@ -83,7 +92,7 @@ class UserController {
     public static function updatePassword(){
         session_start();
         if($_POST['newPassword'] == $_POST['repeatPassword']){
-            $user = user::get($_SESSION['userId']);
+            $user = user::get($_GET['userId']);
             if(password_verify($_POST['currentPassword'], $user['User_Password'])){
                 user::update($user['Username'], $user['User_First_Name'], $user['User_Last_Name'], $user['User_Email'], password_hash($_POST['newPassword'], PASSWORD_DEFAULT), $user['User_Phone_Number'], $user['User_Confirmed'], $user['Address_Id']);
                 session_destroy();

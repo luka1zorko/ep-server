@@ -22,7 +22,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <!--All-->
                 <li style="display:<?php echo isset($_SESSION['userRole']) ? 'block':'none' ?>">
-                    <a class="nav-link" href="<?= BASE_URL . "profile" ?>"><span class="fas fa-user"></span>&nbsp;Profile</a>
+                    <a class="nav-link" href="<?= BASE_URL . "profile?userId=" . $_SESSION['userId'] . "&role=" . $_SESSION['userRole']?>"><span class="fas fa-user"></span>&nbsp;Profile</a>
                 </li>
                 <!--Customer-->
                 <li style="display:<?php echo isset($_SESSION['userRole']) && $_SESSION['userRole'] == 3 ? 'block':'none' ?>">

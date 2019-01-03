@@ -2,7 +2,7 @@
 require_once("view/navbar.php")
 ?>
 <div class="container">
-    <form action="<?= BASE_URL . "profile/updatePersonalInformation" ?>" method="post">
+    <form action="<?= BASE_URL . "profile/updatePersonalInformation?userId=" . $_GET['userId'] ?>" method="post">
     <!--first name, last name, city, postal code, address-->
     <fieldset>
         <legend>Personal information</legend>
@@ -46,7 +46,7 @@ require_once("view/navbar.php")
         <button class="btn btn-primary btn-block" type="submit">Save</button>
     </div>
     </form>
-    <form style="display:<?php echo isset($_SESSION['userRole']) && $_SESSION['userRole'] == 3 ? 'block':'none' ?>" action="<?= BASE_URL . "updateAddress" ?>" method="post">
+    <form style="display:<?php echo isset($_SESSION['userRole']) && $_SESSION['userRole'] == 3 ? 'block':'none' ?>" action="<?= BASE_URL . "updateAddress?userId=" . $_GET['userId']?>" method="post">
     <fieldset>
         <legend>Address information</legend>
         <!--Postal code-->
@@ -82,7 +82,7 @@ require_once("view/navbar.php")
         <button class="btn btn-primary btn-block" type="submit">Save</button>
     </div>    
     </form>
-    <form action="<?= BASE_URL . "profile/updatePassword" ?>" method="post">
+    <form action="<?= BASE_URL . "profile/updatePassword?userId=" . $_GET['userId']?>" method="post">
     <fieldset>
         <legend>Password</legend>
         <!--Current password-->
