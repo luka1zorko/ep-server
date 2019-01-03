@@ -17,7 +17,7 @@ class ItemController {
         $data = filter_input_array(INPUT_GET, $rules);
 
         if ($data["id"]) {
-            echo ViewHelper::render("view/item-detail.php", [
+            echo ViewHelper::render("view/itemDetail.php", [
                 "item" => item::get($data)
             ]);
         } else {

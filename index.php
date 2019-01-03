@@ -4,6 +4,7 @@
 #session_start();
 
 require_once("controller/itemController.php");
+require_once("controller/itemRESTController.php");
 require_once("controller/userController.php");
 require_once("utils.php");
 
@@ -15,49 +16,77 @@ $path = isset($_SERVER["PATH_INFO"]) ? trim($_SERVER["PATH_INFO"], "/") : "";
 
 // ROUTER: defines mapping between URLS and controllers
 $urls = [
-    "signin" => function() {
+    "/^signin$/" => function() {
         userController::signIn();
     },
-    "signout" => function() {
+    "/^signout$/" => function() {
         userController::signOut();
     },
-    "items" => function () {
+    "/^items$/" => function () {
         itemController::index();
     },
-    "items/add" => function () {
+    "/^items\/add$/" => function () {
         itemController::add();
     },
-    "items/edit" => function () {
+    "/^items\/edit$/" => function () {
         itemController::edit();
     },
-    "items/delete" => function () {
+    "/^items\/delete$/" => function () {
         itemController::delete();
     },
-    "profile" => function () {
+    "/^profile$/" => function () {
         userController::profile();
     },
-    "profile/update" => function () {
+    "/^profile\/update$/" => function () {
         userController::updateProfile();
     },            
-    "signupRedirect" => function () {
+    "/^signup\/Redirect$/" => function () {
         echo ViewHelper::render("view/signUp.view.php");
     },
-    "signup" => function () {
+    "/^signup$/" => function () {
         UserController::signUp();
     },            
-    "" => function () {
+    "/^$/" => function () {
         ViewHelper::redirect(BASE_URL . "items");
+    },
+    
+    # REST API
+    "/^api\/items\/(\d+)$/" => function ($method, $id) {
+        // TODO: izbris knjige z uporabo HTTP metode DELETE
+        switch ($method) {
+            case "PUT":
+                itemRESTController::edit($id);
+                break;
+            default: # GET
+                itemRESTController::get($id);
+                break;
+        }
+    },
+    "/^api\/items$/" => function ($method) {
+        switch ($method) {
+            case "POST":
+                itemRESTController::add();
+                break;
+            default: # GET
+                itemRESTController::index();
+                break;
+        }
     },
 ];
 
-try {
-    if (isset($urls[$path])) {
-        $urls[$path]();
-    } else {
-        echo "No controller for '$path'";
+foreach ($urls as $pattern => $controller) {
+    if (preg_match($pattern, $path, $params)) {
+        try {
+            $params[0] = $_SERVER["REQUEST_METHOD"];
+            $controller(...$params);
+        } catch (InvalidArgumentException $e) {
+            ViewHelper::error404();
+        } catch (Exception $e) {
+            ViewHelper::displayError($e, true);
+        }
+
+        exit();
     }
-} catch (InvalidArgumentException $e) {
-    ViewHelper::error404();
-} catch (Exception $e) {
-    echo "An error occurred: <pre>$e</pre>";
-} 
+}
+
+ViewHelper::displayError(new InvalidArgumentException("No controller matched."), true);
