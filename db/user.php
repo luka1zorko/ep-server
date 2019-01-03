@@ -83,13 +83,21 @@ class user {
                 
     }
     
-    public static function getCustomerList() {
+    public static function getUserList($roleId) {
         $db = DBInit::getInstance();
-
-        $statement = $db->prepare("SELECT * FROM user WHERE Role_Id = 3");
+        $statement = $db->prepare("SELECT * FROM user WHERE Role_Id > :roleId");
+        $statement->bindParam(":roleId", $roleId);
         $statement->execute();
-
         return $statement->fetchAll();
+    }
+    
+    public static function userConfirmation($username, $confirmed){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("UPDATE user SET User_Confirmed = :confirmed"
+                . " WHERE Username = :username");
+        $statement->bindParam(":username", $username);
+        $statement->bindParam(":confirmed", $confirmed);
+        $statement->execute();
     }
     
 }

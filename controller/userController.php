@@ -123,8 +123,12 @@ class UserController {
     }
     
     public static function customerList(){
-        $list = user::getAll();
+        $list = user::getUserList($_GET['role']);
         echo json_encode($list);
+    }
+    
+    public static function toggleConfirmation(){
+        user::userConfirmation($_POST['username'], $_POST['confirmed']);
     }
    
 }

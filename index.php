@@ -61,6 +61,9 @@ $urls = [
     "/^customerList$/" => function () {
         UserController::customerList();
     },
+    "/^toggleConfirmation$/" => function () {
+        UserController::toggleConfirmation();
+    },
     "/^registerSalesman$/" => function () {
         UserController::registerSalesman();
     },      

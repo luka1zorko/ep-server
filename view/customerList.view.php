@@ -3,6 +3,8 @@ require_once("view/navbar.php")
 ?>
 <script type="text/javascript">
     var BASE_URL = "<?php echo BASE_URL ?>";
+    var role = "<?php echo $_SESSION['userRole']?>";
+    var userId = "<?php echo $_SESSION['userId']?>";
 </script>
 <script src="../js/customerList.js"></script>
 <div class="row">
@@ -11,7 +13,7 @@ require_once("view/navbar.php")
     <h3>Customers</h3>
     <br><br>
 <div class="row">
-<table class="table table-hover" id="dynamicTable">
+<table class="table table-hover">
   <thead>
     <tr>
       <th scope="col">#</th>
@@ -22,29 +24,7 @@ require_once("view/navbar.php")
       <th scope="col"></th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <td>1</td>
-      <td>username</td>
-      <td>first</td>
-      <td>last</td>
-      <td>Customer</td>
-      <td>
-      <button type="button" class="btn btn-xs btn-primary">Activate</button>
-      <button type="button" class="btn btn-xs btn-danger">Deactivate</button>
-      </td>
-    </tr>
-    <tr>
-      <td>2</th>
-      <td>Jacob</td>
-      <td>Mark</td>
-      <td>Thornton</td>
-      <td>salesman</td>
-      <td>
-        <button type="button" class="btn btn-xs btn-primary">Activate</button>
-        <button type="button" class="btn btn-xs btn-danger">Deactivate</button>
-      </td>
-    </tr>
+  <tbody id="dynamicTable">
   </tbody>
 </table>
     </div>
