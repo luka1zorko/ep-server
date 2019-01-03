@@ -61,6 +61,7 @@ create table item
    Item_Id              int not null auto_increment,
    Item_Name            varchar(100) not null,
    Item_Price           int,
+   Item_Description     text,
    UNIQUE (Item_Name),
    primary key (Item_Id)
 );

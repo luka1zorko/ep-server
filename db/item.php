@@ -1,53 +1,45 @@
 <?php
 
 require_once 'database_init.php';
+require_once 'db/AbstractDB.php';
 
-class item {
+class item extends AbstractDB {
 
     public static function getAll() {
-        $db = DBInit::getInstance();
-
-        $statement = $db->prepare("SELECT * FROM item");
-        $statement->execute();
-
-        return $statement->fetchAll();
+        return parent::query("SELECT * FROM item");
     }
     
-    public static function delete($itemId) {
-        $db = DBInit::getInstance();
-
-        $statement = $db->prepare("DELETE FROM item WHERE Item_Id = :itemId");
-        $statement->bindParam(":itemId", $itemId, PDO::PARAM_INT);
-        $statement->execute();
+    public static function delete(array $id) {
+        return parent::modify("DELETE FROM item WHERE Item_Id = :id", $id);
     }
     
-    public static function get($itemId) {
-        $db = DBInit::getInstance();
+    public static function get(array $id) {
+        $items = parent::query("SELECT Item_Id, Item_Name, Item_Description, Item_Price"
+                        . " FROM item"
+                        . " WHERE Item_Id = :id", $id);
 
-        $statement = $db->prepare("SELECT * FROM item WHERE Item_Id =:itemId");
-        $statement->bindParam(":itemId", $itemId);
-        $statement->execute();
-
-        return $statement->fetch();
+        if (count($items) == 1) {
+            return $items[0];
+        } else {
+            throw new InvalidArgumentException("No such item");
+        }
+    }
+    
+    public static function getAllwithURI(array $prefix) {
+        return parent::query("SELECT Item_Id, Item_Name, Item_Price, "
+                        . "CONCAT(:prefix, Item_Id) as uri "
+                        . "FROM item "
+                        . "ORDER BY Item_Id ASC", $prefix);
     }
 
-    public static function insert($itemName, $itemPrice) {
-        $db = DBInit::getInstance();
-        $statement = $db->prepare("INSERT INTO item(Item_Name, Item_Price)  
-        VALUES (:itemName, :itemPrice)");
-        $statement->bindParam(":itemName", $itemName);
-        $statement->bindParam(":itemPrice", $itemPrice);
-        $statement->execute();
+    public static function insert(array $params) {
+        return parent::modify("INSERT INTO item (Item_Name, Item_Description, Item_Price) "
+                        . " VALUES (:name, :description, :price)", $params);
+    }
+    
+    public static function update(array $params) {
+        return parent::modify("UPDATE item SET Item_Name = :itemName, Item_Price = :itemPrice "
+                . "WHERE Item_Id = :itemId", $params);
     }
 
-    public static function update($itemId, $itemName, $itemPrice) {
-        $db = DBInit::getInstance();
-        $statement = $db->prepare("UPDATE item SET Item_Name = :itemName, Item_Price = :itemPrice "
-                . "WHERE Item_Id = :itemId");
-        $statement->bindParam(":itemId", $itemId);
-        $statement->bindParam(":itemName", $itemName);
-        $statement->bindParam(":itemPrice", $itemPrice);
-        $statement->execute();
-    }
 }
-
