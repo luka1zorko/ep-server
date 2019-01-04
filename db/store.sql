@@ -61,6 +61,7 @@ create table item
    Item_Id              int not null auto_increment,
    Item_Name            varchar(100) not null,
    Item_Price           int,
+   Item_Activated       bool not null,
    Item_Description     text,
    UNIQUE (Item_Name),
    primary key (Item_Id)
@@ -196,23 +197,23 @@ VALUES (8000, 'Novo mesto', 'Ulica Mirana Jarca', 3);
 INSERT INTO address(Postal_Code, City, Street, House_Number, House_Number_Addon)  
 VALUES (8000, 'Novo mesto', 'Šmihel', 24, 'A');
 
-INSERT INTO item(Item_Name, Item_Price)  
-VALUES ('ASUS Phoenix GeForce GTX 1050 Ti 4GB GDDR5', 169.90);
+INSERT INTO item(Item_Name, Item_Price, Item_Activated, Item_Description)  
+VALUES ('ASUS Phoenix GeForce GTX 1050 Ti 4GB GDDR5', 169.90, 1, 'TODO');
 
-INSERT INTO item(Item_Name, Item_Price)  
-VALUES ('ASUS ROG STRIX RTX2080 O8G GAMING', 1040.40);
+INSERT INTO item(Item_Name, Item_Price, Item_Activated, Item_Description)  
+VALUES ('ASUS ROG STRIX RTX2080 O8G GAMING', 1040.40, 1, 'TODO');
 
-INSERT INTO item(Item_Name, Item_Price)  
-VALUES ('Intel® Core™ i5-9600K Processor', 310.45);
+INSERT INTO item(Item_Name, Item_Price, Item_Activated, Item_Description)  
+VALUES ('Intel® Core™ i5-9600K Processor', 310.45, 1, 'TODO');
 
-INSERT INTO item(Item_Name, Item_Price)  
-VALUES ('Intel® Core™ i7-9700K Processor', 543.50);
+INSERT INTO item(Item_Name, Item_Price, Item_Activated, Item_Description)  
+VALUES ('Intel® Core™ i7-9700K Processor', 543.50, 1, 'TODO');
 
-INSERT INTO item(Item_Name, Item_Price)  
-VALUES ('Intel® Pentium® Processor G4560', 76.40);
+INSERT INTO item(Item_Name, Item_Price, Item_Activated, Item_Description)  
+VALUES ('Intel® Pentium® Processor G4560', 76.40, 1, 'TODO');
 
-INSERT INTO item(Item_Name, Item_Price)  
-VALUES ('SAMSUNG SSD 860 EVO 2.5" SATA III 250GB', 65.42);
+INSERT INTO item(Item_Name, Item_Price, Item_Activated, Item_Description)  
+VALUES ('SAMSUNG SSD 860 EVO 2.5" SATA III 250GB', 65.42, 1, 'TODO');
 
 INSERT INTO roles(Role_Id, Role)  
 VALUES (1, 'Administrator');

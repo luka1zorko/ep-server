@@ -1,24 +1,32 @@
 <?php
 require_once("view/navbar.php")
 ?>
-<!DOCTYPE html>
-<meta charset="UTF-8" />
-<title>Library</title>
+<script type="text/javascript">
+    var BASE_URL = "<?php echo BASE_URL ?>";
+    var role = "<?php echo $_SESSION['userRole']?>";
+</script>
+<script src="../js/itemList.js"></script>
+<div class="row">
+  <div class="col-md-2"></div>
+  <div align="center"  class="col-md-8">
+    <h3>Customers</h3>
+    <br><br>
+<div class="row">
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Item ID</th>
+      <th scope="col">Item</th>
+      <th scope="col">Price</th>
+      <th scope="col"></th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody id="dynamicTable">
+  </tbody>
+</table>
+    </div>
+  </div>
+</div>
 
-
-<?php if (!Utils::isLoggedIn()): ?>
-    <p><a href="<?= BASE_URL . "signin" ?>">LogIn</a></p>
-<?php else: ?>
-    <p><a href="<?= BASE_URL . "items"?>">Logout</a></p>
-<?php endif; ?>
-
-
-<h1>All items</h1>
-
-<ul>
-
-    <?php foreach ($items as $item): ?>
-        <li><a href="<?= BASE_URL . "item/" . $item["Item_Id"] ?>"> <?= $item["Item_Name"] ?> (<?= $item["Item_Price"] ?> EUR)</a></li>
-    <?php endforeach; ?>
-
-</ul>

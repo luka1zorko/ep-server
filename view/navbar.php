@@ -61,7 +61,7 @@
                 </li>
                 <!--Salesman-->
                 <li style="display:<?php echo isset($_SESSION['userRole']) && ($_SESSION['userRole'] == 1 || $_SESSION['userRole'] == 2) ? 'block':'none' ?>">
-                    <a class="nav-link" href=""><span class="fas fa-cart-plus"></span>&nbsp;Items</a>
+                    <a class="nav-link" href="<?= BASE_URL . "itemList" ?>"><span class="fas fa-cart-plus"></span>&nbsp;Items</a>
                 </li>
                 <!--Salesman-->
                 <li style="display:<?php echo isset($_SESSION['userRole']) && ($_SESSION['userRole'] == 1 || $_SESSION['userRole'] == 2) ? 'block':'none' ?>">

@@ -41,5 +41,14 @@ class item extends AbstractDB {
         return parent::modify("UPDATE item SET Item_Name = :itemName, Item_Price = :itemPrice "
                 . "WHERE Item_Id = :itemId", $params);
     }
+    
+    public static function itemActivation($itemId, $activated){
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("UPDATE item SET Item_Activated = :activated"
+                . " WHERE Item_Id = :itemId");
+        $statement->bindParam(":itemId", $itemId);
+        $statement->bindParam(":activated", $activated);
+        $statement->execute();
+    }
 
 }

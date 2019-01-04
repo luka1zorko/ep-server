@@ -67,6 +67,12 @@ $urls = [
     "/^registerCustomer$/" => function () {
         UserController::registerCustomer();
     },   
+    "/^itemList$/" => function () {
+        ItemController::itemList();
+    },
+    "/^toggleActivation$/" => function () {
+        ItemController::toggleActivation();
+    },      
     "/^$/" => function () {
         ViewHelper::redirect(BASE_URL . "items");
     },

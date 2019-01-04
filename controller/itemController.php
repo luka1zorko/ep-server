@@ -21,10 +21,23 @@ class ItemController {
                 "item" => item::get($data)
             ]);
         } else {
-            echo ViewHelper::render("view/itemList.view.php", [
+            echo ViewHelper::render("view/items.view.php", [
                 "items" => item::getAll()
             ]);
         }
+    }
+    
+    public static function itemList(){
+        if(isset($_GET['role'])){
+            $items = item::getAll();
+            echo json_encode($items);
+        }
+        else
+            echo ViewHelper::render("view/itemList.view.php");
+    }
+    
+    public static function toggleActivation(){
+        item::itemActivation($_POST['itemId'], $_POST['activated']);
     }
     
     /*
