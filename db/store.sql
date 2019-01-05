@@ -60,7 +60,7 @@ create table item
 (
    Item_Id              int not null auto_increment,
    Item_Name            varchar(100) not null,
-   Item_Price           int,
+   Item_Price           DECIMAL(13,4) not null,
    Item_Activated       bool not null,
    Item_Description     text,
    UNIQUE (Item_Name),

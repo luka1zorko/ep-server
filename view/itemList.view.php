@@ -9,7 +9,7 @@ require_once("view/navbar.php")
 <div class="row">
   <div class="col-md-2"></div>
   <div align="center"  class="col-md-8">
-    <h3>Customers</h3>
+    <h3>Items</h3>
     <br><br>
 <div class="row">
 <table class="table table-hover">
@@ -26,6 +26,10 @@ require_once("view/navbar.php")
   <tbody id="dynamicTable">
   </tbody>
 </table>
+    
+    <div class="offset-md-4 col-md-4">
+        <button id="addItemButton" class="btn btn-primary btn-block" type="button">Add item</button>
+    </div>
     </div>
   </div>
 </div>

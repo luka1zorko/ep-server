@@ -14,7 +14,7 @@ class item extends AbstractDB {
     }
     
     public static function get(array $id) {
-        $items = parent::query("SELECT Item_Id, Item_Name, Item_Description, Item_Price"
+        $items = parent::query("SELECT *"
                         . " FROM item"
                         . " WHERE Item_Id = :id", $id);
 
@@ -26,19 +26,31 @@ class item extends AbstractDB {
     }
     
     public static function getAllwithURI(array $prefix) {
-        return parent::query("SELECT Item_Id, Item_Name, Item_Price, "
+        return parent::query("SELECT Item_Id, Item_Name, Item_Price, Item_Activated"
                         . "CONCAT(:prefix, Item_Id) as uri "
                         . "FROM item "
                         . "ORDER BY Item_Id ASC", $prefix);
     }
 
     public static function insert(array $params) {
-        return parent::modify("INSERT INTO item (Item_Name, Item_Description, Item_Price) "
-                        . " VALUES (:name, :description, :price)", $params);
+        return parent::modify("INSERT INTO item (Item_Name, Item_Description, Item_Price, Item_Activated) "
+                        . " VALUES (:name, :description, :price, :itemActivated)", $params);
+    }
+    
+    public static function insert2($itemName, $itemPrice, $description, $activated) {
+        
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("INSERT INTO item(Item_Name, Item_Price, Item_Description, Item_Activated)  
+        VALUES (:itemName, :itemPrice, :description, activated)");
+        $statement->bindParam(":itemName", $itemName);
+        $statement->bindParam(":itemPrice", $itemPrice);
+        $statement->bindParam(":description", $description);
+        $statement->bindParam(":activated", $activated);
+        $statement->execute();
     }
     
     public static function update(array $params) {
-        return parent::modify("UPDATE item SET Item_Name = :itemName, Item_Price = :itemPrice "
+        return parent::modify("UPDATE item SET Item_Name = :itemName, Item_Price = :itemPrice, Item_Activated = :itemActivated"
                 . "WHERE Item_Id = :itemId", $params);
     }
     

@@ -25,10 +25,10 @@ $urls = [
     "/^items$/" => function () {
         itemController::index();
     },
-    "/^items\/add$/" => function () {
-        itemController::add();
+    "/^item\/add$/" => function () {
+        itemController::addItem();
     },
-    "/^items\/edit$/" => function () {
+    "/^item\/edit$/" => function () {
         itemController::edit();
     },
     "/^items\/delete$/" => function () {
@@ -72,7 +72,10 @@ $urls = [
     },
     "/^toggleActivation$/" => function () {
         ItemController::toggleActivation();
-    },      
+    },  
+    "/^addItem$/" => function () {
+        ItemController::addItem();
+    },    
     "/^$/" => function () {
         ViewHelper::redirect(BASE_URL . "items");
     },

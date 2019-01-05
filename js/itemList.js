@@ -13,7 +13,7 @@ $(document).ready(function(){
                 "<td>" + val.Item_Price + "</td>" +
                 "<td>" + ((val.Item_Activated == 1) ? '<button type="button" class="deactivate btn btn-xs btn-danger">Deactivate</button><button type="button" class="activate btn btn-xs btn-primary" style="display: none;">Activate</button>' 
                         : '<button type="button" class="deactivate btn btn-xs btn-danger" style="display: none;">Deactivate</button><button type="button" class="activate btn btn-xs btn-primary">Activate</button>' ) + "</td>" + 
-                "<td>" + '<button type="button" class="detailsButton btn btn-xs btn-secondary">Details</button>' + "</td></tr>";
+                "<td>" + '<button type="button" class="detailsButton btn btn-xs btn-secondary">Change item</button>' + "</td></tr>";
                 html += row;
             });
             $("#dynamicTable").html(html);
@@ -57,11 +57,11 @@ $(document).ready(function(){
     
     $(document).on('click', '.detailsButton', function(){ 
         var itemId = $(this).closest('tr')[0].childNodes[1].innerText;
-        window.location.href = BASE_URL;
-        //$.get(BASE_URL + "/profile", {role:rowRoleId, userId: rowUserId},  function(response,status){
-         //   console.log(status);
-          //  console.log(response);
-        //});
+        window.location.href = BASE_URL + "addItem?itemId=" + itemId;
+    });
+    
+    $("#addItemButton").click(function(){
+        window.location.href = BASE_URL + "addItem";
     });
 });
 

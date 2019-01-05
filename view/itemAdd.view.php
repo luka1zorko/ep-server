@@ -1,20 +1,41 @@
-<!DOCTYPE html>
-
-<meta charset="UTF-8" />
-<title>Add entry</title>
-
-<h1>Add new book</h1>
-
-<p>[
-<a href="<?= BASE_URL . "books" ?>">All books</a> |
-<a href="<?= BASE_URL . "books/add" ?>">Add new</a>
-]</p>
-
-<form action="<?= BASE_URL . "books/add" ?>" method="post">
-    <p><label>Author: <input type="text" name="author" value="<?= $author ?>" autofocus /></label></p>
-    <p><label>Title: <input type="text" name="title" value="<?= $title ?>" /></label></p>
-    <p><label>Price: <input type="number" name="price" value="<?= $price ?>" /></label></p>
-    <p><label>Year: <input type="number" name="year" value="<?= $year ?>" /></label></p>
-    <p><label>Description: <br/><textarea name="description" cols="70" rows="10"><?= $description ?></textarea></label></p>
-    <p><button>Insert</button></p>
-</form>
+<?php
+require_once("view/navbar.php")
+?>
+<script src="../js/itemAdd.js"></script>
+<script>
+    var itemId = "<?php echo (isset($_GET['itemId']) ? $_GET['itemId'] : 0)?>";
+    var BASE_URL = "<?php echo BASE_URL ?>";
+</script>
+<div class="container">
+    <div align="center">
+        <h3 id="heading"></h3>
+    </div>
+    <form id="addItemForm">
+    <fieldset>
+        <!--Item name-->
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Name</label>
+            <div class="input-group col-sm-10">
+                <input type="text" class="form-control" name="itemName">
+            </div>
+        </div>
+        <!--Item price-->
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Price</label>
+            <div class="input-group col-sm-10">
+                <input type="text" class="form-control" name="itemPrice">
+            </div>
+        </div>
+        <!--Item description-->
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Description</label>
+            <div class="input-group col-sm-10">
+                <textarea id="textarea" class="form-control" name="description"></textarea>
+            </div>
+        </div>
+    </fieldset>
+    <div class="offset-md-6 col-md-2">
+        <button id="saveItemButton" class="btn btn-primary btn-block" type="button">Save</button>
+    </div>
+    </form>
+</div>
