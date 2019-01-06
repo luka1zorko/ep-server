@@ -26,9 +26,10 @@ class item extends AbstractDB {
     }
     
     public static function getAllwithURI(array $prefix) {
-        return parent::query("SELECT Item_Id, Item_Name, Item_Price, Item_Activated"
+        return parent::query("SELECT Item_Id, Item_Name, Item_Price, Item_Activated, "
                         . "CONCAT(:prefix, Item_Id) as uri "
                         . "FROM item "
+                        . "WHERE Item_Activated = 1 "
                         . "ORDER BY Item_Id ASC", $prefix);
     }
 
