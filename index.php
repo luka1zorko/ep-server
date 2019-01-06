@@ -17,64 +17,95 @@ $path = isset($_SERVER["PATH_INFO"]) ? trim($_SERVER["PATH_INFO"], "/") : "";
 // ROUTER: defines mapping between URLS and controllers
 $urls = [
     "/^signin$/" => function() {
+        utils::use_HTTPS();
         userController::signIn();
     },
     "/^signout$/" => function() {
+        utils::use_HTTPS();
         userController::signOut();
     },
     "/^items$/" => function () {
         itemController::index();
     },
     "/^item\/add$/" => function () {
-        itemController::addItem();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {itemController::addItem();}
     },
     "/^item\/edit$/" => function () {
-        itemController::edit();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {itemController::edit();}
     },
     "/^items\/delete$/" => function () {
-        itemController::delete();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {itemController::delete();}
     },
     "/^profile$/" => function () {
-        userController::profile();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {userController::profile();}
     },     
     "/^profile\/update$/" => function () {
-        userController::updateProfile();
-    },            
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {userController::updateProfile();}
+    },
     "/^signupRedirect$/" => function () {
+        utils::use_HTTPS();
         echo ViewHelper::render("view/signUp.view.php");
     },
     "/^signup$/" => function () {
+        utils::use_HTTPS();
         UserController::signUp();
     },
     "/^profile\/updatePersonalInformation$/" => function () {
-        UserController::updatePersonalInformation();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {UserController::updatePersonalInformation();}
     },
     "/^profile\/updateAddress$/" => function () {
-        UserController::updateAddress();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {UserController::updateAddress();}
     },
     "/^profile\/updatePassword$/" => function () {
-        UserController::updatePassword();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {UserController::updatePassword();}
     },            
     "/^customerList$/" => function () {
-        UserController::customerList();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {UserController::customerList();}
     },
     "/^toggleConfirmation$/" => function () {
-        UserController::toggleConfirmation();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {UserController::toggleConfirmation();}
     },
     "/^registerSalesman$/" => function () {
-        UserController::registerSalesman();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {UserController::registerSalesman();}
     }, 
     "/^registerCustomer$/" => function () {
-        UserController::registerCustomer();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {UserController::registerCustomer();}
     },   
     "/^itemList$/" => function () {
         ItemController::itemList();
     },
     "/^toggleActivation$/" => function () {
-        ItemController::toggleActivation();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {ItemController::toggleActivation();}
     },  
     "/^addItem$/" => function () {
-        ItemController::addItem();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {ItemController::addItem();}
     },    
     "/^$/" => function () {
         ViewHelper::redirect(BASE_URL . "items");
