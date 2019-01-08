@@ -3,3 +3,7 @@ RewriteBase /netbeans/ep-server/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*) index.php/$1 [L,PT,QSA]
+
+SSLVerifyClient require
+SSLVerifyDepth 1
+SSLOptions +ExportCertData

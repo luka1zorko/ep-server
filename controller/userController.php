@@ -9,16 +9,36 @@ class UserController {
     public static function signIn() {
         $wrongPassword = false;
         $notConfirmed = false;
+        $notCertified = false;
         if (isset($_POST["username"]) && isset($_POST["password"])) {
             try {
                 if(user::getByUsername($_POST['username'])['User_Confirmed']){
                     if ($user = user::login($_POST["username"], $_POST["password"])) {
-                        session_start();
-                        session_regenerate_id(true);
-                        $_SESSION["userId"] = $user['User_Id'];
-                        $_SESSION["userRole"] = $user['Role_Id'];
-                        echo ViewHelper::redirect(BASE_URL . "items");
-                        //var_dump($_SESSION);
+                        
+                        if ($user['Role_Id'] != 3) { # if user is not customer
+                            $client_cert = filter_input(INPUT_SERVER, "SSL_CLIENT_CERT");
+                            
+                            if ($client_cert == null) {
+                                die('err: Spremenljivka SSL_CLIENT_CERT ni nastavljena.');
+                            }
+                            
+                            $cert_data = openssl_x509_parse($client_cert);
+                            $commonname = (is_array($cert_data['subject']['CN']) ?
+                                            $cert_data['subject']['CN'][0] : $cert_data['subject']['CN']);
+                            
+                            
+                            if ($commonname != $user['Username']) { # if user is not authorized reject certificate
+                                $notCertified = True;
+                            }
+                        }
+                        if (!$notCertified) {
+                            session_start();
+                            session_regenerate_id(true);
+                            $_SESSION["userId"] = $user['User_Id'];
+                            $_SESSION["userRole"] = $user['Role_Id'];
+                            echo ViewHelper::redirect(BASE_URL . "items");
+                            //var_dump($_SESSION);
+                        }
                     } else {
                         $wrongPassword = true;
                     }
@@ -38,10 +58,13 @@ class UserController {
         echo ViewHelper::render("view/signIn.view.php");
         
         if($wrongPassword){
-            echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Wrong username and/or password</b></p></div>,</div>";
+            echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Wrong username and/or password</b></p></div></div>";
         }
         elseif($notConfirmed){
-            echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Account not activated.</b></p></div>,</div>";
+            echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Account not activated.</b></p></div></div>";
+        }
+        elseif($notCertified){
+            echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>You need a certificat to sign in.</b></p></div></div>";
         }
         
     }
@@ -106,7 +129,8 @@ class UserController {
     }
     
     public static function updateAddress(){
-       /* session_start();
+       /*
+        session_start();
         $user = user::get($_SESSION['userId']);
         $addressId = $user['Address_Id'];
         $postalCode = filter_input(INPUT_POST, 'postalCode', FILTER_SANITIZE_STRING);
