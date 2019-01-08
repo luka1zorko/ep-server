@@ -3,7 +3,7 @@
 class Utils {
 
     public static function isLoggedIn() {
-        return isset($_SESSION["userId"]);
+        return $_SESSION["isLoggedIn"];
     }
     
      public static function use_HTTPS() {

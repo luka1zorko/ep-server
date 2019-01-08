@@ -5,6 +5,10 @@ require_once 'db/AbstractDB.php';
 
 class item extends AbstractDB {
 
+    public static function getAllActivated() {
+        return parent::query("SELECT * FROM item WHERE Item_Activated = 1");
+    }
+    
     public static function getAll() {
         return parent::query("SELECT * FROM item");
     }

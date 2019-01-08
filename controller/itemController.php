@@ -4,7 +4,6 @@ require_once("db/item.php");
 require_once("db/cart.php");
 require_once("db/image.php");
 require_once("ViewHelper.php");
-#require_once("forms/ItemsForm.php");
 
 class ItemController {
 
@@ -24,7 +23,7 @@ class ItemController {
             ]);
         } else {
             echo ViewHelper::render("view/items.view.php", [
-                "items" => item::getAll()
+                "items" => item::getAllActivated()
             ]);
         }
     }
@@ -34,8 +33,8 @@ class ItemController {
             $items = item::getAll();
             echo json_encode($items);
         }
-        else
-            echo ViewHelper::render("view/itemList.view.php");
+        else {echo ViewHelper::render("view/itemList.view.php");}
+            
     }
     
     public static function toggleActivation(){

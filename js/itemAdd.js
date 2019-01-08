@@ -29,7 +29,7 @@ $(document).ready(function(){
         else{
             console.log("before create post");
             console.log(data);
-            $.post(BASE_URL + "addItem", data, function(response,status){
+            $.post(BASE_URL + "item/add", data, function(response,status){
                 console.log("in post");
                 console.log(response);
                 if(status == "success"){
