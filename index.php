@@ -72,10 +72,19 @@ $urls = [
     },
     "/^toggleActivation$/" => function () {
         ItemController::toggleActivation();
-    },  
+    },
+    "/^itemDetails$/" => function () {
+        ItemController::itemDetails();
+    },            
     "/^addItem$/" => function () {
         ItemController::addItem();
-    },    
+    },
+    "/^saveCart$/" => function (){
+        ItemController::saveCart();
+    },
+    "/^emptyCart$/" => function (){
+        ItemController::emptyCart();
+    },        
     "/^$/" => function () {
         ViewHelper::redirect(BASE_URL . "items");
     },

@@ -25,6 +25,14 @@ class item extends AbstractDB {
         }
     }
     
+    public static function get2($itemId) {
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM item WHERE Item_Id =:itemId");
+        $statement->bindParam(":itemId", $itemId);
+        $statement->execute();
+        return $statement->fetch();
+    }
+    
     public static function getAllwithURI(array $prefix) {
         return parent::query("SELECT Item_Id, Item_Name, Item_Price, Item_Activated"
                         . "CONCAT(:prefix, Item_Id) as uri "

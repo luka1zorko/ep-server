@@ -13,6 +13,14 @@ class image {
         return $statement->fetchAll();
     }
     
+    public static function getAllForItem($itemId) {
+        $db = DBInit::getInstance();
+        $statement = $db->prepare("SELECT * FROM image WHERE Item_Id = :itemId");
+        $statement->bindParam(":itemId", $itemId);
+        $statement->execute();
+        return $statement->fetchAll();
+    }
+    
     public static function delete($imageId) {
         $db = DBInit::getInstance();
 

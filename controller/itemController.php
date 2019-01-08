@@ -1,6 +1,8 @@
 <?php
 
 require_once("db/item.php");
+require_once("db/cart.php");
+require_once("db/image.php");
 require_once("ViewHelper.php");
 #require_once("forms/ItemsForm.php");
 
@@ -43,10 +45,10 @@ class ItemController {
     
     public static function addItem() {
         $post = isset($_POST['itemName']);
-        echo($post);
+        //echo($post);
         if($post){
-            print_r("post['itemName'] exists");
-            item::insert($_POST['itemName'], $_POST['itemPrice'], $_POST['description'], $_POST['activated']);
+            //print_r("post['itemName'] exists");
+            item::insert2($_POST['itemName'], $_POST['itemPrice'], $_POST['description'], $_POST['activated']);
         }
         else{
             echo ViewHelper::render("view/itemAdd.view.php");
@@ -60,6 +62,33 @@ class ItemController {
             echo "post['itemName'] exists";
         }
         echo "post['itemName'] does not exist]";
+    }
+    
+    public static function saveCart(){
+        session_start();
+        //print_r("saving cart");
+        //print_r($_POST);
+        //print_r($_SESSION['userId']);
+        //$array = json_decode($_POST['cart']);
+        cart::removeAllItems($_SESSION['userId']);
+        foreach($_POST as $itemId => $quantity){
+            //print_r($itemId);
+            //print_r($quantity);
+            cart::insert($_SESSION['userId'], $itemId, $quantity);
+        }
+    }
+    
+    public static function emptyCart(){
+        session_start();
+        cart::removeAllItems($_SESSION['userId']);
+    }
+    
+    public static function itemDetails(){
+        $item = item::get2($_GET['itemId']);
+        $images = image::getAllForItem($_GET['itemId']);
+        $data = ["item"=> $item, "images" => $images];
+        //var_dump($data);
+        echo ViewHelper::render("view/item.view.php", $data);
     }
      
 }

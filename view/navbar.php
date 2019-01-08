@@ -26,7 +26,7 @@
                 </li>
                 <!--Customer-->
                 <li style="display:<?php echo isset($_SESSION['userRole']) && $_SESSION['userRole'] == 3 ? 'block':'none' ?>">
-                    <a class="nav-link" href=""><span class="fas fa-shopping-cart"></span>&nbsp;Cart</a>
+                    <a class="nav-link" href=""><span class="fas fa-shopping-cart"></span>&nbsp;Checkout</a>
                 </li>
                 <!--Customer-->
                 <li>

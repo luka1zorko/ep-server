@@ -36,6 +36,7 @@ create table cart
 (
    User_Id              int not null,
    Item_Id              int not null,
+   Quantity             int not null,
    primary key (User_Id, Item_Id)
 );
 
@@ -60,7 +61,7 @@ create table item
 (
    Item_Id              int not null auto_increment,
    Item_Name            varchar(100) not null,
-   Item_Price           DECIMAL(13,4) not null,
+   Item_Price           DECIMAL(13,2) not null,
    Item_Activated       bool not null,
    Item_Description     text,
    UNIQUE (Item_Name),
@@ -260,14 +261,14 @@ VALUES (5, 2, 5);
 INSERT INTO rating(User_Id, Item_Id, Rating)
 VALUES (5, 3, 3);
 
-INSERT INTO cart(User_Id, Item_Id)
-VALUES (4, 2);
+INSERT INTO cart(User_Id, Item_Id, Quantity)
+VALUES (4, 2, 2);
 
-INSERT INTO cart(User_Id, Item_Id)
-VALUES (4, 4);
+INSERT INTO cart(User_Id, Item_Id, Quantity)
+VALUES (4, 4, 1);
 
-INSERT INTO cart(User_Id, Item_Id)
-VALUES (5, 1);
+INSERT INTO cart(User_Id, Item_Id, Quantity)
+VALUES (5, 1, 2);
 
 INSERT INTO receipt(Customer_User_Id, Salesman_User_Id)
 VALUES (4, 2);
@@ -294,10 +295,10 @@ INSERT INTO receipt_item(Receipt_Id, Item_Id)
 VALUES (3, 4);
 
 INSERT INTO image(Item_Id, Image_Name, Serial_Number, Image_Path)
-VALUES (1, 'Asus_Phoenix_GTX_1050tTi_1.jpeg', 1, '/resources/images');
+VALUES (1, 'Asus_Phoenix_GTX_1050tTi_1.jpeg', 1, '/resources/images/');
 
 INSERT INTO image(Item_Id, Image_Name, Serial_Number, Image_Path)
-VALUES (1, 'Asus_Phoenix_GTX_1050tTi_2.jpeg', 2, '/resources/images');
+VALUES (1, 'Asus_Phoenix_GTX_1050tTi_2.jpeg', 2, '/resources/images/');
 
 INSERT INTO image(Item_Id, Image_Name, Serial_Number, Image_Path)
-VALUES (2, 'ASUS_ROG_STRIX_RTX2080_1.jpeg', 1, '/resources/images');
+VALUES (2, 'ASUS_ROG_STRIX_RTX2080_1.jpeg', 1, '/resources/images/');
