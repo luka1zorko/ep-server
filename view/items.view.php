@@ -70,7 +70,7 @@ switch ($data["do"]) {
     </head>
     <body>  
         <div id="main">
-            <?php foreach (item::getAll() as $item): ?>
+            <?php foreach (item::getAllActivated() as $item): ?>
                 <div class="item">
                     <form action="<?= $url ?>" method="post">
                         <input type="hidden" name="do" value="add_into_cart" />
