@@ -12,11 +12,11 @@ $(document).ready(function(){
         var itemName = $("input[name=itemName]").val();
         var itemPrice = $("input[name=itemPrice]").val();
         var description = $("textarea[name=description]").val();
-        var data = {itemName: itemName, itemPrice: itemPrice, description: description, activated: 1};  
+        var data = {itemName: itemName, itemPrice: itemPrice, description: description, activated: 1, itemId: itemId};
         if(itemId != 0){
             console.log("before update post");
             console.log(data);
-            $.post(BASE_URL + "item/edit", data, function(response,status){
+            $.post(BASE_URL + "editItem", data, function(response,status){
                 console.log("in post");
                 console.log(response);
                 if(status == "success"){

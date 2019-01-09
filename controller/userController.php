@@ -9,7 +9,7 @@ class UserController {
     public static function signIn() {
         $wrongPassword = false;
         $notConfirmed = false;
-        $notCertified = false;
+        $isCertified = True;
         if (isset($_POST["username"]) && isset($_POST["password"])) {
             try {
                 if(user::getByUsername($_POST['username'])['User_Confirmed']){
@@ -20,24 +20,28 @@ class UserController {
                             
                             if ($client_cert == null) {
                                 die('err: Spremenljivka SSL_CLIENT_CERT ni nastavljena.');
-                            }
-                            
-                            $cert_data = openssl_x509_parse($client_cert);
-                            $commonname = (is_array($cert_data['subject']['CN']) ?
+                                $isCertified = False;
+                            } else {
+                                $cert_data = openssl_x509_parse($client_cert);
+                                $commonname = (is_array($cert_data['subject']['CN']) ?
                                             $cert_data['subject']['CN'][0] : $cert_data['subject']['CN']);
                             
                             
-                            if ($commonname != $user['Username']) { # if user is not authorized reject certificate
-                                $notCertified = True;
+                                if ($commonname != $user['Username']) { # if user is not authorized reject certificate
+                                   $isCertified = False;
+                                }
                             }
+                            
                         }
-                        if (!$notCertified) {
+                        
+                        
+                        if ($isCertified) {
                             session_start();
                             session_regenerate_id(true);
+                            $_SESSION["isLoggedIn"] = True;
                             $_SESSION["userId"] = $user['User_Id'];
                             $_SESSION["userRole"] = $user['Role_Id'];
                             echo ViewHelper::redirect(BASE_URL . "items");
-                            //var_dump($_SESSION);
                         }
                     } else {
                         $wrongPassword = true;
@@ -63,7 +67,7 @@ class UserController {
         elseif($notConfirmed){
             echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Account not activated.</b></p></div></div>";
         }
-        elseif($notCertified){
+        elseif(!$isCertified){
             echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>You need a certificat to sign in.</b></p></div></div>";
         }
         
@@ -84,22 +88,22 @@ class UserController {
     }
 
     public static function signOut(){
-        session_start();
+        #session_start();
         session_destroy();
         echo ViewHelper::redirect(BASE_URL . "signin");
     }
     
     public static function profile() {
-        session_start();
+        #session_start();
         $user = user::get($_GET["userId"]);
-        if($_GET['role'] == 3)
+        if($user['Role_Id'] == 3)
             $user = array_merge ($user, address::get($user['Address_Id']));
         //var_dump($merge);
         echo ViewHelper::render("view/profile.view.php", $user);
     }
     
     public static function updatePersonalInformation() {
-        session_start();
+        #session_start();
         $user = user::get($_GET['userId']);
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
@@ -110,10 +114,15 @@ class UserController {
                 strlen($lastName) > 0 ? $lastName : $user['User_Last_Name'], strlen($email) > 0 ? $email : $user['User_Email'],
                 $user['User_Password'], strlen($phoneNumber) > 0 ? $phoneNumber : $user['User_Phone_Number'],
                 $user['User_Confirmed'], $user['Address_Id']);
+        
+        $user = user::get($_GET["userId"]);
+        if($user['Role_Id'] == 3)
+            $user = array_merge ($user, address::get($user['Address_Id']));
+        echo ViewHelper::render("view/profile.view.php", $user);
     }
     
     public static function updatePassword(){
-        session_start();
+        #session_start();
         if($_POST['newPassword'] == $_POST['repeatPassword']){
             $user = user::get($_GET['userId']);
             if(password_verify($_POST['currentPassword'], $user['User_Password'])){
@@ -126,11 +135,16 @@ class UserController {
         }
         else
             echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Gesli se ne ujemata.</b></p></div>,</div>";
+    
+        $user = user::get($_GET["userId"]);
+        if($user['Role_Id'] == 3)
+            $user = array_merge ($user, address::get($user['Address_Id']));
+        echo ViewHelper::render("view/profile.view.php", $user);
     }
     
     public static function updateAddress(){
        /*
-        session_start();
+        #session_start();
         $user = user::get($_SESSION['userId']);
         $addressId = $user['Address_Id'];
         $postalCode = filter_input(INPUT_POST, 'postalCode', FILTER_SANITIZE_STRING);
@@ -138,7 +152,13 @@ class UserController {
         $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
         $houseNumber = filter_input(INPUT_POST, 'houseNumber', FILTER_SANITIZE_STRING);
         $houseNumberAddon = null;
-        address::update($addressId, $postalCode, $city, $street, $houseNumber, $houseNumberAddon);*/
+        address::update($addressId, $postalCode, $city, $street, $houseNumber, $houseNumberAddon);
+
+        $user = user::get($_GET["userId"]);
+        if($_GET['role'] == 3)
+            $user = array_merge ($user, address::get($user['Address_Id']));
+        echo ViewHelper::render("view/profile.view.php", $user);
+        */
     }
     
     public static function registerSalesman(){

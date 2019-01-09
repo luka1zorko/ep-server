@@ -4,7 +4,6 @@ require_once("db/item.php");
 require_once("db/cart.php");
 require_once("db/image.php");
 require_once("ViewHelper.php");
-#require_once("forms/ItemsForm.php");
 
 class ItemController {
 
@@ -24,7 +23,7 @@ class ItemController {
             ]);
         } else {
             echo ViewHelper::render("view/items.view.php", [
-                "items" => item::getAll()
+                "items" => item::getAllActivated()
             ]);
         }
     }
@@ -34,8 +33,8 @@ class ItemController {
             $items = item::getAll();
             echo json_encode($items);
         }
-        else
-            echo ViewHelper::render("view/itemList.view.php");
+        else {echo ViewHelper::render("view/itemList.view.php");}
+            
     }
     
     public static function toggleActivation(){
@@ -44,24 +43,27 @@ class ItemController {
     
     
     public static function addItem() {
-        $post = isset($_POST['itemName']);
-        //echo($post);
-        if($post){
-            //print_r("post['itemName'] exists");
-            item::insert2($_POST['itemName'], $_POST['itemPrice'], $_POST['description'], $_POST['activated']);
+        if(isset($_POST['itemName'])){
+            try{
+             item::insert2($_POST['itemName'], $_POST['itemPrice'], $_POST['description'], $_POST['activated']);   
+            } catch (Exception $ex) {
+              print_r("EXEPCTION IN ADDITEM");
+              print_r($ex);
+            }
         }
         else{
             echo ViewHelper::render("view/itemAdd.view.php");
         }
     }
     
-    public static function edit() {
-        print_r($_POST);
+    public static function editItem() {
         if(isset($_POST['itemName'])){
-            item::update([$_POST['itemName'], $_POST['itemPrice'], $_POST['description'], $_POST['activated'], $_GET['itemId']]);
-            echo "post['itemName'] exists";
+            try{
+             item::update($_POST['itemId'], $_POST['itemName'], $_POST['itemPrice'], $_POST['description'], $_POST['activated']);   
+            } catch (Exception $ex) {
+              print_r($ex);
+            }
         }
-        echo "post['itemName'] does not exist]";
     }
     
     public static function saveCart(){

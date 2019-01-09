@@ -231,11 +231,11 @@ VALUES ('janezek', 'Janez', 'Novak', 'jn@gmail.com', '$2y$10$dnIMSCtE5p3txtmlzYt
 
 INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id, User_Confirmed)  
-VALUES ('ana_horvat', 'Ana', 'Horvat', 'ah@yahoo.com', '$2y$10$D6Xs1.qYfeVU8N3O3eoK1.XEZyCys1.3/efrKRdfhmgesEg1PueZC', 2, 1);
+VALUES ('ana', 'Ana', 'Horvat', 'ah@yahoo.com', '$2y$10$D6Xs1.qYfeVU8N3O3eoK1.XEZyCys1.3/efrKRdfhmgesEg1PueZC', 2, 1);
 
 INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id, User_Confirmed)  
-VALUES ('klara_turk', 'Klara', 'Turk', 'kt@blabla.com', '$2y$10$D6Xs1.qYfeVU8N3O3eoK1.XEZyCys1.3/efrKRdfhmgesEg1PueZC', 2, 1);
+VALUES ('klara', 'Klara', 'Turk', 'kt@blabla.com', '$2y$10$D6Xs1.qYfeVU8N3O3eoK1.XEZyCys1.3/efrKRdfhmgesEg1PueZC', 2, 1);
 
 INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
 User_Password, Role_Id, Address_Id, User_Phone_Number, User_Confirmed) 

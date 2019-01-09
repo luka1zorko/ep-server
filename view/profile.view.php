@@ -46,7 +46,7 @@ require_once("view/navbar.php")
         <button class="btn btn-primary btn-block" type="submit">Save</button>
     </div>
     </form>
-    <form style="display:<?php echo isset($_SESSION['userRole']) && $_SESSION['userRole'] == 3 ? 'block':'none' ?>" action="<?= BASE_URL . "updateAddress?userId=" . $_GET['userId']?>" method="post">
+    <form style="display:<?php echo isset($_GET['role']) && $_GET['role'] == 3 ? 'block':'none' ?>" action="<?= BASE_URL . "updateAddress?userId=" . $_GET['userId']?>" method="post">
     <fieldset>
         <legend>Address information</legend>
         <!--Postal code-->

@@ -1,7 +1,7 @@
 <?php
 
 // enables sessions
-#session_start();
+session_start();
 
 require_once("controller/itemController.php");
 require_once("controller/itemRESTController.php");
@@ -17,107 +17,105 @@ $path = isset($_SERVER["PATH_INFO"]) ? trim($_SERVER["PATH_INFO"], "/") : "";
 
 // ROUTER: defines mapping between URLS and controllers
 $urls = [
-    "/^signin$/" => function() {
-        utils::use_HTTPS();
-        userController::signIn();
-    },
-    "/^signout$/" => function() {
-        utils::use_HTTPS();
-        userController::signOut();
-    },
     "/^items$/" => function () {
         itemController::index();
     },
-    "/^item\/add$/" => function () {
+    "/^itemDetails$/" => function () {
+        itemController::itemDetails();
+    },  
+    "/^signin$/" => function() {
         utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {itemController::addItem();}
-    },
-    "/^item\/edit$/" => function () {
-        utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {itemController::edit();}
-    },
-    "/^items\/delete$/" => function () {
-        utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {itemController::delete();}
-    },
-    "/^profile$/" => function () {
-        utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {userController::profile();}
-    },     
-    "/^profile\/update$/" => function () {
-        utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {userController::updateProfile();}
-    },
-    "/^signupRedirect$/" => function () {
-        utils::use_HTTPS();
-        echo ViewHelper::render("view/signUp.view.php");
+        userController::signIn();
     },
     "/^signup$/" => function () {
         utils::use_HTTPS();
         UserController::signUp();
     },
+    "/^signupRedirect$/" => function () {
+        echo ViewHelper::render("view/signUp.view.php");
+    },
+    "/^signout$/" => function() {
+        utils::use_HTTPS();
+        userController::signOut();
+    },
+    # Profile
+    "/^profile$/" => function () {
+        utils::use_HTTPS();
+        if (utils::isLoggedIn()) {userController::profile();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
+    },     
+    "/^profile\/update$/" => function () {
+        utils::use_HTTPS();
+        if (utils::isLoggedIn()) {itemController::updateProfile();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
+    },
     "/^profile\/updatePersonalInformation$/" => function () {
         utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {UserController::updatePersonalInformation();}
+        if (utils::isLoggedIn()) {userController::updatePersonalInformation();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
     },
     "/^profile\/updateAddress$/" => function () {
         utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {UserController::updateAddress();}
+        if (utils::isLoggedIn()) {userController::updateAddress();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
     },
     "/^profile\/updatePassword$/" => function () {
         utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {UserController::updatePassword();}
-    },            
+        if (utils::isLoggedIn()) {userController::updatePassword();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
+    },
+    
+    # Customer and Salesman List
     "/^customerList$/" => function () {
         utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {UserController::customerList();}
+        if (utils::isLoggedIn() && utils::isSalesman()) {userController::customerList();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
     },
     "/^toggleConfirmation$/" => function () {
         utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {UserController::toggleConfirmation();}
+        if (utils::isLoggedIn() && utils::isSalesman()) {userController::toggleConfirmation();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
     },
     "/^registerSalesman$/" => function () {
         utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {UserController::registerSalesman();}
+        if (utils::isLoggedIn() && utils::isAdmin()) {userController::registerSalesman();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
     }, 
     "/^registerCustomer$/" => function () {
         utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {UserController::registerCustomer();}
-    },   
+        if (utils::isLoggedIn() && utils::isSalesman()) {userController::registerCustomer();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
+    },
+    
+    # Item List
     "/^itemList$/" => function () {
-        ItemController::itemList();
+        if (utils::isLoggedIn() && utils::isSalesman()) {itemController::itemList();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
     },
     "/^toggleActivation$/" => function () {
         utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {ItemController::toggleActivation();}
+        if (utils::isLoggedIn() && utils::isSalesman()) {itemController::toggleActivation();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
     },
-    "/^itemDetails$/" => function () {
-        utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {ItemController::itemDetails();}
-    },            
+    "/^addItem$/" => function () {
+        if (utils::isLoggedIn()) {itemController::addItem();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
+    },
+    "/^editItem/" => function () {
+        if (utils::isLoggedIn()) {itemController::editItem();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
+    },
+            
+    # Cart
     "/^saveCart$/" => function (){
         utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {ItemController::saveCart();}
+        if (utils::isLoggedIn()) {itemController::saveCart();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
     },
     "/^emptyCart$/" => function (){
         utils::use_HTTPS();
-        if (!utils::isLoggedIn()) {userController::signIn();}
-        else {ItemController::emptyCart();}
+        if (utils::isLoggedIn()) {itemController::emptyCart();}
+        else {ViewHelper::redirect(BASE_URL . "items");}
     },        
     "/^addItem$/" => function () {
         utils::use_HTTPS();

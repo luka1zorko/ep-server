@@ -22,7 +22,7 @@ $(document).ready(function(){
             console.log("failed");
     });
     
-    $(document).on('click', '.deactivate', function(){ 
+    $(document).on('click', '.deactivate', function(){
         var itemId = $(this).closest('tr')[0].childNodes[1].innerText;
         console.log($(this).closest('tr')[0].childNodes[1].innerText);
         var button = $(this);
