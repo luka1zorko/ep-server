@@ -74,6 +74,17 @@ class UserController {
     }
         
     public static function signUp(){
+        if(isset($_POST['g-recaptcha-response']))
+          $captcha=$_POST['g-recaptcha-response'];
+
+        if(!$captcha){
+          echo '<h2>Please check the the captcha form.</h2>';
+          exit;
+        }
+        $response=json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6Lc7MYgUAAAAAJtVNnOoud-dfKtKyPJuT5Unt3Ym&response=".$captcha."&remoteip=".$_SERVER['REMOTE_ADDR']), true);
+        if($response['success'] == false)
+        {echo '<h2>You are spammer!</h2>';}
+        
         $addressId = address::resolveAddress($_POST['postalCode'], $_POST['city'], $_POST['street'], $_POST['houseNumber']);
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $roleId = 3;
