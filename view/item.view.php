@@ -62,7 +62,6 @@ switch ($data["do"]) {
         <div class="col-lg-6">
           <h2 class="my-4"><?php echo $variables['item']['Item_Name']?></h2>
           <div class="list-group">
-              
               <img>    
           </div>
         </div>
@@ -119,7 +118,7 @@ switch ($data["do"]) {
             <?php endif; ?>
         </div>
 
-<script src="../js/items.js"></script>
+<script src="../js/itemDetails.js"></script>
 <script>
     var BASE_URL = "<?php echo BASE_URL ?>";
     var images = <?php echo json_encode($variables['images'])?>;

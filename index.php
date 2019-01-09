@@ -6,6 +6,7 @@
 require_once("controller/itemController.php");
 require_once("controller/itemRESTController.php");
 require_once("controller/userController.php");
+require_once("controller/orderController.php");
 require_once("utils.php");
 
 define("BASE_URL", $_SERVER["SCRIPT_NAME"] . "/");
@@ -119,9 +120,13 @@ $urls = [
         else {ItemController::emptyCart();}
     },        
     "/^addItem$/" => function () {
+        utils::use_HTTPS();
         if (!utils::isLoggedIn()) {userController::signIn();}
         else {ItemController::addItem();}
     },    
+    "/^checkout$/" => function (){
+        OrderController::checkout();
+    },
     "/^$/" => function () {
         ViewHelper::redirect(BASE_URL . "items");
     },

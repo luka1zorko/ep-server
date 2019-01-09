@@ -1,4 +1,12 @@
 $(document).ready(function(){
+    var indexNum = 0;
+    var picSrc = [];
+    for(var i = 0; i < images.length; i++){
+        picSrc[i] = ".." + images[i]['Image_Path'] + images[i]['Image_Name'];
+    }
+    $("img").attr('alt', 'No images available for this item');
+    $("img").attr('src', picSrc[indexNum]).fadeIn();
+    console.log(picSrc);
     $("#saveCartButton").click(function(){
         console.log("before cart save");
         console.log(cart);
@@ -28,5 +36,17 @@ $(document).ready(function(){
             }); 
         }
     });
+    document.onkeypress = function(e){
+        if (e.keyCode == 37 && indexNum > 0) {
+            indexNum--;
+            $("img").attr('src', picSrc[indexNum]).fadeIn();
+            console.log($("img"));
+        }
+
+        else if (e.keyCode == 39 && indexNum < picSrc.length - 1) {
+            indexNum++;
+            $("img").attr('src', picSrc[indexNum]).fadeIn();
+        }
+    }
 });
 
