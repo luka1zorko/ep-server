@@ -57,7 +57,7 @@ $(document).ready(function(){
     
     $(document).on('click', '.detailsButton', function(){ 
         var itemId = $(this).closest('tr')[0].childNodes[1].innerText;
-        window.location.href = BASE_URL + "addItem?itemId=" + itemId;
+        window.location.href = BASE_URL + "editItem?itemId=" + itemId;
     });
     
     $("#addItemButton").click(function(){

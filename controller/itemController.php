@@ -44,7 +44,7 @@ class ItemController {
     public static function addItem() {
         if(isset($_POST['itemName'])){
             $itemName = filter_input(INPUT_POST, 'itemName', FILTER_SANITIZE_STRING);
-            $itemPrice = filter_input(INPUT_POST, 'itemPrice', FILTER_SANITIZE_NUMBER_FLOAT);
+            $itemPrice = filter_input(INPUT_POST, 'itemPrice', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
             try{
                 item::insert2($itemName, $itemPrice, $description, $_POST['activated']);   
@@ -61,13 +61,17 @@ class ItemController {
     public static function editItem() {
         if(isset($_POST['itemName'])){
             $itemName = filter_input(INPUT_POST, 'itemName', FILTER_SANITIZE_STRING);
-            $itemPrice = filter_input(INPUT_POST, 'itemPrice', FILTER_SANITIZE_NUMBER_FLOAT);
+            $itemPrice = filter_input(INPUT_POST, 'itemPrice', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
             $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
             try{
                 item::update($_POST['itemId'], $itemName, $itemPrice, $description, $_POST['activated']);   
             } catch (Exception $ex) {
               print_r($ex);
             }
+        }
+        else{
+            $item = item::get2($_GET['itemId']);
+            echo ViewHelper::render("view/itemAdd.view.php", $item);
         }
     }
     
