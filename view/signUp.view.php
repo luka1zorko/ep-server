@@ -1,6 +1,10 @@
 <?php
     require_once("view/navbar.php")
 ?> 
+<head>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+<body>
 <div style="margin-bottom:10%"></div>
 <form class="text-center" action="<?= BASE_URL . "signup" ?>" method="post">
     <h1 class="h3 mb-3 font-weight-normal">Sign up</h1>
@@ -69,6 +73,12 @@
     </div>
     </div>
     </div>
+    <!-- CAPTCHA -->
+    <div class="row">
+        <div class="offset-md-4 col-md-3 col">
+            <div class="g-recaptcha" data-sitekey="6Lc7MYgUAAAAAIE86LIZM6aFd7pSYOxN7rOW2YjQ"></div>
+        </div>
+    </div>
     <!--BUTTON-->
     <div class="row">
     <div class="offset-md-4 col-md-4">
@@ -76,3 +86,4 @@
     </div>
     </div>
 </form>
+</body>

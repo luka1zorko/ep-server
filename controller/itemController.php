@@ -41,11 +41,13 @@ class ItemController {
         item::itemActivation($_POST['itemId'], $_POST['activated']);
     }
     
-    
     public static function addItem() {
         if(isset($_POST['itemName'])){
+            $itemName = filter_input(INPUT_POST, 'itemName', FILTER_SANITIZE_STRING);
+            $itemPrice = filter_input(INPUT_POST, 'itemPrice', FILTER_SANITIZE_NUMBER_FLOAT);
+            $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
             try{
-             item::insert2($_POST['itemName'], $_POST['itemPrice'], $_POST['description'], $_POST['activated']);   
+                item::insert2($itemName, $itemPrice, $description, $_POST['activated']);   
             } catch (Exception $ex) {
               print_r("EXEPCTION IN ADDITEM");
               print_r($ex);
@@ -58,8 +60,11 @@ class ItemController {
     
     public static function editItem() {
         if(isset($_POST['itemName'])){
+            $itemName = filter_input(INPUT_POST, 'itemName', FILTER_SANITIZE_STRING);
+            $itemPrice = filter_input(INPUT_POST, 'itemPrice', FILTER_SANITIZE_NUMBER_FLOAT);
+            $description = filter_input(INPUT_POST, 'description', FILTER_SANITIZE_STRING);
             try{
-             item::update($_POST['itemId'], $_POST['itemName'], $_POST['itemPrice'], $_POST['description'], $_POST['activated']);   
+                item::update($_POST['itemId'], $itemName, $itemPrice, $description, $_POST['activated']);   
             } catch (Exception $ex) {
               print_r($ex);
             }
