@@ -29,10 +29,6 @@
                     <a class="nav-link" href="<?= BASE_URL . "checkout?userId=" . $_SESSION['userId']?>"><span class="fas fa-shopping-cart"></span>&nbsp;Checkout</a>
                 </li>
                 <!--Customer-->
-                <li>
-                    <a class="nav-link" href=""><span class="far fa-list-alt"></span>&nbsp;My Orders</a>
-                </li>
-                <!--Customer-->
                 <li style="display:<?php echo isset($_SESSION['userRole']) ? 'none':'block' ?>">
                     <a class="nav-link" href="<?= BASE_URL . "signupRedirect" ?>"><span class=""></span>&nbsp;Sign up</a>
                 </li>
@@ -40,12 +36,6 @@
                 <li style="display:<?php echo isset($_SESSION['userRole']) ? 'none':'block' ?>">
                     <a class="nav-link" href="<?= BASE_URL . "signin" ?>">
                         <span class="fas fa-sign-in-alt"></span>&nbsp;Sign In
-                    </a>
-                </li>
-                <!--All-->
-                <li style="display:<?php echo isset($_SESSION['userRole']) ? 'block':'none' ?>">
-                    <a class="nav-link" href="<?= BASE_URL . "signout" ?>">
-                        <span class="fas fa-sign-out-alt"></span>&nbsp;Sign Out
                     </a>
                 </li>
                 <!--Admin-->
@@ -56,8 +46,8 @@
                     <a class="nav-link" href="<?= BASE_URL . "registerCustomer" ?>"><span class="fas fa-user-plus"></span>&nbsp;Register Customer</a>
                 </li>
                 <!--Salesman-->
-                <li>
-                    <a class="nav-link" href=""><span class="far fa-list-alt"></span>&nbsp;Orders</a>
+                <li style="display:<?php echo isset($_SESSION['userRole']) ? 'block':'none' ?>">
+                    <a class="nav-link" href="<?= BASE_URL . "orders" ?>"><span class="far fa-list-alt"></span>&nbsp;Orders</a>
                 </li>
                 <!--Salesman-->
                 <li style="display:<?php echo isset($_SESSION['userRole']) && ($_SESSION['userRole'] == 1 || $_SESSION['userRole'] == 2) ? 'block':'none' ?>">
@@ -66,6 +56,12 @@
                 <!--Salesman-->
                 <li style="display:<?php echo isset($_SESSION['userRole']) && ($_SESSION['userRole'] == 1 || $_SESSION['userRole'] == 2) ? 'block':'none' ?>">
                     <a class="nav-link" href="<?= BASE_URL . "customerList" ?>"><span class="fas fa-users"></span>&nbsp;Customers</a>
+                </li>
+                <!--All-->
+                <li style="display:<?php echo isset($_SESSION['userRole']) ? 'block':'none' ?>">
+                    <a class="nav-link" href="<?= BASE_URL . "signout" ?>">
+                        <span class="fas fa-sign-out-alt"></span>&nbsp;Sign Out
+                    </a>
                 </li>
             </ul>
           </div>

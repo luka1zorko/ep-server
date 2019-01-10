@@ -12,8 +12,9 @@ drop table if exists item;
 drop table if exists rating;
 drop table if exists receipt;
 drop table if exists receipt_item;
-drop table if exists roles;
+drop table if exists role;
 drop table if exists user;
+drop table if exists status;
 
 /*==============================================================*/
 /* Table: address                                               */
@@ -80,13 +81,25 @@ create table rating
 );
 
 /*==============================================================*/
+/* Table: status                                                */
+/*==============================================================*/
+create table status
+(
+   Status_Id            int not null,
+   Status               varchar(30) not null,
+   UNIQUE (Status),
+   primary key (Status_Id)
+);
+
+/*==============================================================*/
 /* Table: receipt                                               */
 /*==============================================================*/
 create table receipt
 (
    Receipt_Id           int not null auto_increment,
    Customer_User_Id     int not null,
-   Salesman_User_Id     int not null,
+   Salesman_User_Id     int,
+   Status_Id            int not null,
    primary key (Receipt_Id)
 );
 
@@ -101,9 +114,9 @@ create table receipt_item
 );
 
 /*==============================================================*/
-/* Table: roles                                                 */
+/* Table: role                                                  */
 /*==============================================================*/
-create table roles
+create table role
 (
    Role_Id              int not null,
    Role                 varchar(30) not null,
@@ -151,6 +164,9 @@ alter table receipt add constraint FK_is_customer foreign key (Customer_User_Id)
 alter table receipt add constraint FK_is_salesman foreign key (Salesman_User_Id)
       references user (User_Id) on delete restrict on update restrict;
 
+alter table receipt add constraint FK_has_status foreign key (Status_Id)
+      references status (Status_Id) on delete restrict on update restrict;
+
 alter table receipt_item add constraint FK_Relationship_11 foreign key (Item_Id)
       references item (Item_Id) on delete restrict on update restrict;
 
@@ -158,7 +174,7 @@ alter table receipt_item add constraint FK_Relationship_12 foreign key (Receipt_
       references receipt (Receipt_Id) on delete restrict on update restrict;
 
 alter table user add constraint FK_has_role foreign key (Role_Id)
-      references roles (Role_Id) on delete restrict on update restrict;
+      references role (Role_Id) on delete restrict on update restrict;
 
 alter table user add constraint FK_lives_at foreign key (Address_Id)
       references address (Address_Id) on delete restrict on update restrict;
@@ -216,13 +232,13 @@ VALUES ('Intel® Pentium® Processor G4560', 76.40, 1, 'TODO');
 INSERT INTO item(Item_Name, Item_Price, Item_Activated, Item_Description)  
 VALUES ('SAMSUNG SSD 860 EVO 2.5" SATA III 250GB', 65.42, 1, 'TODO');
 
-INSERT INTO roles(Role_Id, Role)  
+INSERT INTO role(Role_Id, Role)  
 VALUES (1, 'Administrator');
 
-INSERT INTO roles(Role_Id, Role)  
+INSERT INTO role(Role_Id, Role)  
 VALUES (2, 'Salesman');
 
-INSERT INTO roles(Role_Id, Role)  
+INSERT INTO role(Role_Id, Role)  
 VALUES (3, 'Customer');
 
 INSERT INTO user(Username, User_First_Name, User_Last_Name, User_Email, 
@@ -270,14 +286,23 @@ VALUES (4, 4, 1);
 INSERT INTO cart(User_Id, Item_Id, Quantity)
 VALUES (5, 1, 2);
 
-INSERT INTO receipt(Customer_User_Id, Salesman_User_Id)
-VALUES (4, 2);
+INSERT INTO status(Status_Id, Status)  
+VALUES (1, 'Submitted');
 
-INSERT INTO receipt(Customer_User_Id, Salesman_User_Id)
-VALUES (4, 3);
+INSERT INTO status(Status_Id, Status)  
+VALUES (2, 'Confirmed');
 
-INSERT INTO receipt(Customer_User_Id, Salesman_User_Id)
-VALUES (5, 3);
+INSERT INTO status(Status_Id, Status)  
+VALUES (3, 'Canceled');
+
+INSERT INTO receipt(Customer_User_Id, Salesman_User_Id, Status_Id)
+VALUES (4, null, 1);
+
+INSERT INTO receipt(Customer_User_Id, Salesman_User_Id, Status_Id)
+VALUES (4, 3, 2);
+
+INSERT INTO receipt(Customer_User_Id, Salesman_User_Id, Status_Id)
+VALUES (5, 3, 3);
 
 INSERT INTO receipt_item(Receipt_Id, Item_Id)
 VALUES (1, 1);

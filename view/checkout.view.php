@@ -84,10 +84,16 @@ require_once("view/navbar.php")
               </div>
             </div>
             <hr class="mb-4">
-            <button class="btn btn-primary btn-lg btn-block" type="submit">Submit order</button>
+            <button id="submitOrderButton" class="btn btn-primary btn-lg btn-block" type="button">Submit order</button>
           </form>
         </div>
       </div>
     </div>
   </body>
 </html>
+
+<script>
+    var BASE_URL = "<?php echo BASE_URL ?>";
+    var data = <?php echo json_encode($variables) ?>;
+</script>
+<script src='../js/checkout.js'></script>

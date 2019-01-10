@@ -24,7 +24,37 @@ class OrderController {
         echo ViewHelper::render("view/checkout.view.php", $data);
     }
 
-    public static function createReceipt(){
-        
+    public static function submitOrder(){
+        $receiptId = receipt::addReceipt($_SESSION['userId']);
+        foreach ($_POST['cart'] as $itemId => $details){
+            receipt::addItem($receiptId, $itemId);
+        }
+        unset($_SESSION["cart"]);
+        cart::removeAllItems($_SESSION['userId']);
+    }
+    
+    public static function displayOrders(){
+        if($_SESSION['userRole'] == 3){
+            $receipts = receipt::getAllReceiptsFor($_SESSION['userId']);
+        }
+        else{
+            $receipts = receipt::getAllReceipts();
+        }
+        echo ViewHelper::render("view/orders.view.php", $receipts);
+    }
+    
+    public static function orderItems(){
+        $items = receipt::getAllItemDataOn($_POST['receiptId']);
+        echo ViewHelper::render("view/orderItems.view.php", $items);
+    }
+    
+    public static function confirmOrder(){
+        echo "confirming order";
+        receipt::updateStatus($_POST['receiptId'], $_SESSION['userId'], 2);
+    }
+    
+    public static function cancelOrder(){
+        echo "canceling order";
+        receipt::updateStatus($_POST['receiptId'], $_SESSION['userId'], 3);
     }
 }

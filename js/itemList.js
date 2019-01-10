@@ -10,7 +10,7 @@ $(document).ready(function(){
                 "<td>" + (i + 1) + "</td>" +
                 "<td>" + val.Item_Id + "</td>" +
                 "<td>" + val.Item_Name + "</td>" +
-                "<td>" + val.Item_Price + "</td>" +
+                "<td>" + val.Item_Price + "€</td>" +
                 "<td>" + ((val.Item_Activated == 1) ? '<button type="button" class="deactivate btn btn-xs btn-danger">Deactivate</button><button type="button" class="activate btn btn-xs btn-primary" style="display: none;">Activate</button>' 
                         : '<button type="button" class="deactivate btn btn-xs btn-danger" style="display: none;">Deactivate</button><button type="button" class="activate btn btn-xs btn-primary">Activate</button>' ) + "</td>" + 
                 "<td>" + '<button type="button" class="detailsButton btn btn-xs btn-secondary">Change item</button>' + "</td></tr>";

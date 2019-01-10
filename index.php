@@ -124,7 +124,22 @@ $urls = [
     },    
     "/^checkout$/" => function (){
         OrderController::checkout();
+    },        
+    "/^orders/" => function (){
+        OrderController::displayOrders();
     },
+    "/^orderItems/" => function (){
+        OrderController::orderItems();
+    },
+    "/^submitOrder/" => function (){
+        OrderController::submitOrder();
+    },            
+    "/^confirmOrder/" => function (){
+        OrderController::confirmOrder();
+    },
+    "/^cancelOrder/" => function (){
+        OrderController::cancelOrder();
+    },            
     "/^$/" => function () {
         ViewHelper::redirect(BASE_URL . "items");
     },
