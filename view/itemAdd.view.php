@@ -5,6 +5,7 @@ require_once("view/navbar.php")
 <script>
     var itemId = "<?php echo (isset($_GET['itemId']) ? $_GET['itemId'] : 0)?>";
     var BASE_URL = "<?php echo BASE_URL ?>";
+    var item = <?php echo json_encode($variables) ?> ;
 </script>
 <div class="container">
     <div align="center">

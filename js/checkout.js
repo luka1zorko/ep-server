@@ -4,7 +4,7 @@ $(document).ready(function(){
         $.post(BASE_URL + "submitOrder", data, function(response,status){
             console.log("status " + status);
             console.log("response " + response);
-            window.location.href = BASE_URL + "/orders";
+            window.location.href = BASE_URL + "orders";
         });
     });
 });

@@ -40,12 +40,13 @@ class receipt {
         $statement->execute();
     }
     
-    public static function addItem($receiptId, $itemId) {
+    public static function addItem($receiptId, $itemId, $quantity) {
         $db = DBInit::getInstance();
-        $statement = $db->prepare("INSERT INTO receipt_item(Receipt_Id, Item_Id) 
-        VALUES (:receiptId, :itemId)");
+        $statement = $db->prepare("INSERT INTO receipt_item(Receipt_Id, Item_Id, Quantity) 
+        VALUES (:receiptId, :itemId, :quantity)");
         $statement->bindParam(":receiptId", $receiptId);
         $statement->bindParam(":itemId", $itemId);
+        $statement->bindParam(":quantity", $quantity);
         $statement->execute();
     }
     
@@ -57,9 +58,9 @@ class receipt {
         $statement->execute();
     }
     
-    public static function getAllItemIdsOn($receiptId) {
+    public static function getAllIReceiptItemDataOn($receiptId) {
         $db = DBInit::getInstance();
-        $statement = $db->prepare("SELECT Item_Id FROM receipt_item WHERE Receipt_Id = :receiptId");
+        $statement = $db->prepare("SELECT Item_Id, Quantity FROM receipt_item WHERE Receipt_Id = :receiptId");
         $statement->bindParam(":receiptId", $receiptId);
         $statement->execute();
         return $statement->fetchAll();

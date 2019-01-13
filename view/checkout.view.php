@@ -25,7 +25,7 @@ require_once("view/navbar.php")
             <?php foreach ($variables['cart'] as $itemId => $itemDetails): ?>
             <li class="list-group-item d-flex justify-content-between lh-condensed">
               <div>
-                <h6 class="my-0"><?php echo $itemDetails['itemName']?></h6>
+                <h6 class="my-0"><?php echo $itemDetails['quantity']?> &times; <?php echo $itemDetails['itemName']?></h6>
               </div>
               <span class="text-muted"><?php echo $itemDetails['itemPrice']?>€</span>
             </li>
@@ -90,10 +90,9 @@ require_once("view/navbar.php")
       </div>
     </div>
   </body>
-</html>
-
 <script>
     var BASE_URL = "<?php echo BASE_URL ?>";
     var data = <?php echo json_encode($variables) ?>;
 </script>
 <script src='../js/checkout.js'></script>
+</html>

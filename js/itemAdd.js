@@ -2,9 +2,9 @@ $(document).ready(function(){
     console.log(itemId);
     if(itemId != 0){
         $("#heading").html("Edit item");
-        $("input[name=itemName]").val("uij");
-        $("input[name=itemPrice]").val("hbjnk");
-        $("textarea[name=description]").val("zzu");
+        $("input[name=itemName]").val(item['Item_Name']);
+        $("input[name=itemPrice]").val(item['Item_Price']);
+        $("textarea[name=description]").val(item['Item_Description']);
     }
     else
         $("#heading").html("Create a new item");
@@ -23,6 +23,7 @@ $(document).ready(function(){
                 console.log(response);
                 if(status == "success"){
                     console.log("success");
+                    window.location.href = BASE_URL + "itemList";
                 }
                 else
                     console.log("failed");
@@ -36,6 +37,7 @@ $(document).ready(function(){
                 console.log(response);
                 if(status == "success"){
                     console.log("success");
+                    window.location.href = BASE_URL + "itemList";
                 }
                 else
                     console.log("failed");

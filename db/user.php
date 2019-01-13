@@ -78,7 +78,6 @@ class user {
         $statement->bindValue(":username", $username);
         $statement->execute();
         $user =  $statement->fetch();
-        var_dump($user);
         if(password_verify($password, $user['User_Password']))
             return $user;
         else

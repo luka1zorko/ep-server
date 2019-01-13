@@ -48,6 +48,7 @@ class address {
         $statement = $db->prepare("UPDATE address SET Postal_Code = :postalCode, City = :city,"
                 . "Street = :street,  House_Number = :houseNumber, House_Number_Addon = :houseNumberAddon "
                 . "WHERE Address_Id = :addressId");
+        $statement->bindParam(":addressId", $addressId);
         $statement->bindParam(":postalCode", $postalCode);
         $statement->bindParam(":city", $city);
         $statement->bindParam(":street", $street);
