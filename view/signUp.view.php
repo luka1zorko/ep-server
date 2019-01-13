@@ -77,6 +77,7 @@
     <div class="row">
         <div class="offset-md-4 col-md-3 col">
             <div class="g-recaptcha" data-sitekey="6Lc7MYgUAAAAAIE86LIZM6aFd7pSYOxN7rOW2YjQ"></div>
+            <br>
         </div>
     </div>
     <!--BUTTON-->

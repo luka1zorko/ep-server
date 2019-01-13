@@ -64,6 +64,7 @@ class item extends AbstractDB {
         $statement->bindParam(":description", $description);
         $statement->bindParam(":activated", $activated);
         $statement->execute();
+        return $db->lastInsertId();
     }
     
     public static function update($itemId, $itemName, $itemPrice, $description, $activated) {

@@ -12,7 +12,9 @@ $(document).ready(function(){
         var itemName = $("input[name=itemName]").val();
         var itemPrice = $("input[name=itemPrice]").val();
         var description = $("textarea[name=description]").val();
-        var data = {itemName: itemName, itemPrice: itemPrice, description: description, activated: 1, itemId: itemId};
+        var files = $("#images").prop("files[]");
+        console.log(files);
+        var data = {itemName: itemName, itemPrice: itemPrice, description: description, activated: 1, itemId: itemId, files: files};
         if(itemId != 0){
             console.log("before update post");
             console.log(data);
