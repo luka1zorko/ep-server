@@ -66,16 +66,20 @@ switch ($data["do"]) {
           </div>
         </div>
         <div class="col-lg-6" style="margin-top:60px">
-          <div class="card mt-4">
+            <div class="card mt-4">
             <div class="card-body">
               <h4 class="card-title"><?php echo $variables['item']['Item_Name']?></h4>
               <p class="card-text"><?php echo $variables['item']['Item_Description']?>
               <h4><?php echo $variables['item']['Item_Price']?>€</h4>
             </div>
-          </div>
-          <button class="btn btn-lg btn-danger btn-block" type="submit">
-              <i class="fas fa-shopping-cart"></i>Add to cart
-          </button>
+            </div>
+            <form action="<?= $url . "?itemId=" . $_GET['itemId']?>" method="post">
+                <input type="hidden" name="do" value="add_into_cart" />
+                <input type="hidden" name="id" value="<?= $item["Item_Id"] ?>" />
+                <button class="btn btn-lg btn-danger btn-block" type="submit">
+                    <i class="fas fa-shopping-cart"></i>Add to cart
+                </button>
+            </form>
         </div>
     </div>
 </div>

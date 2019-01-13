@@ -106,14 +106,15 @@ class UserController {
     public static function profile() {
         #session_start();
         $user = user::get($_GET["userId"]);
+        if($_GET['role'] < $_SESSION['userRole'] || $_GET['role'] != $user['Role_Id']){
+            echo ViewHelper::redirect(BASE_URL . "items");
+        }
         if($user['Role_Id'] == 3)
             $user = array_merge ($user, address::get($user['Address_Id']));
-        //var_dump($merge);
         echo ViewHelper::render("view/profile.view.php", $user);
     }
     
     public static function updatePersonalInformation() {
-        #session_start();
         $user = user::get($_GET['userId']);
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
         $firstName = filter_input(INPUT_POST, 'firstName', FILTER_SANITIZE_STRING);
@@ -124,11 +125,11 @@ class UserController {
                 strlen($lastName) > 0 ? $lastName : $user['User_Last_Name'], strlen($email) > 0 ? $email : $user['User_Email'],
                 $user['User_Password'], strlen($phoneNumber) > 0 ? $phoneNumber : $user['User_Phone_Number'],
                 $user['User_Confirmed'], $user['Address_Id']);
-        
-        $user = user::get($_GET["userId"]);
+        $user = user::get($_GET['userId']);
         if($user['Role_Id'] == 3)
             $user = array_merge ($user, address::get($user['Address_Id']));
-        echo ViewHelper::render("view/profile.view.php", $user);
+        echo ViewHelper::redirect(BASE_URL . "profile?userId=" . $_GET['userId'] . "&role=" . $user['Role_Id']);
+  
     }
     
     public static function updatePassword(){
@@ -144,31 +145,29 @@ class UserController {
                 echo ViewHelper::redirect(BASE_URL . "signin");
             }
             else
-                "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Napačno geslo.</b></p></div>,</div>";
+                echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Napačno geslo.</b></p></div>,</div>";
         }
         else
             echo "<div class='row'><div class='offset-md-4 col-md-4 text-center'><p><b>Gesli se ne ujemata.</b></p></div>,</div>";
     
-        $user = user::get($_GET["userId"]);
-        if($user['Role_Id'] == 3)
-            $user = array_merge ($user, address::get($user['Address_Id']));
-        echo ViewHelper::render("view/profile.view.php", $user);
     }
     
     public static function updateAddress(){
-        $user = user::get($_SESSION['userId']);
+        $user = user::get($_GET['userId']);
         $addressId = $user['Address_Id'];
+        $address = address::get($addressId);
         $postalCode = filter_input(INPUT_POST, 'postalCode', FILTER_SANITIZE_NUMBER_INT);
         $city = filter_input(INPUT_POST, 'city', FILTER_SANITIZE_STRING);
         $street = filter_input(INPUT_POST, 'street', FILTER_SANITIZE_STRING);
         $houseNumber = filter_input(INPUT_POST, 'houseNumber', FILTER_SANITIZE_STRING);
         $houseNumberAddon = null;
-        address::update($addressId, $postalCode, $city, $street, $houseNumber, $houseNumberAddon);
-
-        //$user = user::get($_GET["userId"]);
+        address::update($addressId, strlen($postalCode) > 0 ? $postalCode : $address['Postal_Code'],
+                strlen($city) > 0 ? $city : $address['City'], strlen($street) > 0 ? $street : $address['Street'],
+                strlen($houseNumber) > 0 ? $houseNumber : $address['House_Number'],
+                $houseNumberAddon);
         if($_GET['role'] == 3)
             $user = array_merge ($user, address::get($user['Address_Id']));
-        echo ViewHelper::render("view/profile.view.php", $user);
+        echo ViewHelper::redirect(BASE_URL . "profile?userId=" . $_GET['userId'] . "&role=" . $user['Role_Id']);
     }
     
     public static function registerSalesman(){

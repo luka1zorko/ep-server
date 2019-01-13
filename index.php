@@ -44,11 +44,6 @@ $urls = [
         if (utils::isLoggedIn()) {userController::profile();}
         else {ViewHelper::redirect(BASE_URL . "items");}
     },     
-    "/^profile\/update$/" => function () {
-        utils::use_HTTPS();
-        if (utils::isLoggedIn()) {itemController::updateProfile();}
-        else {ViewHelper::redirect(BASE_URL . "items");}
-    },
     "/^profile\/updatePersonalInformation$/" => function () {
         utils::use_HTTPS();
         if (utils::isLoggedIn()) {userController::updatePersonalInformation();}
@@ -123,22 +118,34 @@ $urls = [
         else {ItemController::addItem();}
     },    
     "/^checkout$/" => function (){
-        OrderController::checkout();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {OrderController::checkout();}
     },        
     "/^orders/" => function (){
-        OrderController::displayOrders();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {OrderController::displayOrders();}
     },
     "/^orderItems/" => function (){
-        OrderController::orderItems();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {OrderController::orderItems();}
     },
     "/^submitOrder/" => function (){
-        OrderController::submitOrder();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {OrderController::submitOrder();}
     },            
     "/^confirmOrder/" => function (){
-        OrderController::confirmOrder();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {OrderController::confirmOrder();}
     },
     "/^cancelOrder/" => function (){
-        OrderController::cancelOrder();
+        utils::use_HTTPS();
+        if (!utils::isLoggedIn()) {userController::signIn();}
+        else {OrderController::cancelOrder();}
     },            
     "/^$/" => function () {
         ViewHelper::redirect(BASE_URL . "items");

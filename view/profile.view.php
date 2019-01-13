@@ -2,7 +2,7 @@
 require_once("view/navbar.php")
 ?>
 <div class="container">
-    <form action="<?= BASE_URL . "profile/updatePersonalInformation?userId=" . $_GET['userId'] ?>" method="post">
+    <form action="<?= BASE_URL . "profile/updatePersonalInformation?userId=" . $_GET['userId'] . "&role=" . $_GET['role'] ?>" method="post">
     <!--first name, last name, city, postal code, address-->
     <fieldset>
         <legend>Personal information</legend>
@@ -31,7 +31,7 @@ require_once("view/navbar.php")
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Username</label>
             <div class="input-group col-sm-10">
-            <input type="text" class="form-control" name="username" placeholder="<?php echo $variables['Username'];?>">
+                <input type="text" class="form-control" name="username" readonly placeholder="<?php echo $variables['Username'];?>">
             </div>
         </div>
         <!--email-->
@@ -46,7 +46,7 @@ require_once("view/navbar.php")
         <button class="btn btn-primary btn-block" type="submit">Save</button>
     </div>
     </form>
-    <form style="display:<?php echo isset($_GET['role']) && $_GET['role'] == 3 ? 'block':'none' ?>" action="<?= BASE_URL . "updateAddress?userId=" . $_GET['userId']?>" method="post">
+    <form style="display:<?php echo isset($variables['Postal_Code']) ? 'block':'none' ?>" action="<?= BASE_URL . "profile/updateAddress?userId=" . $_GET['userId'] . "&role=" . $_GET['role']?>" method="post">
     <fieldset>
         <legend>Address information</legend>
         <!--Postal code-->

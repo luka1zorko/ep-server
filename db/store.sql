@@ -110,6 +110,7 @@ create table receipt_item
 (
    Item_Id              int not null,
    Receipt_Id           int not null,
+   Quantity             int not null,
    primary key (Item_Id, Receipt_Id)
 );
 
@@ -304,20 +305,20 @@ VALUES (4, 3, 2);
 INSERT INTO receipt(Customer_User_Id, Salesman_User_Id, Status_Id)
 VALUES (5, 3, 3);
 
-INSERT INTO receipt_item(Receipt_Id, Item_Id)
-VALUES (1, 1);
+INSERT INTO receipt_item(Receipt_Id, Item_Id, Quantity)
+VALUES (1, 1, 2);
 
-INSERT INTO receipt_item(Receipt_Id, Item_Id)
-VALUES (1, 2);
+INSERT INTO receipt_item(Receipt_Id, Item_Id, Quantity)
+VALUES (1, 2, 1);
 
-INSERT INTO receipt_item(Receipt_Id, Item_Id)
-VALUES (1, 4);
+INSERT INTO receipt_item(Receipt_Id, Item_Id, Quantity)
+VALUES (1, 4, 2);
 
-INSERT INTO receipt_item(Receipt_Id, Item_Id)
-VALUES (2, 3);
+INSERT INTO receipt_item(Receipt_Id, Item_Id, Quantity)
+VALUES (2, 3, 1);
 
-INSERT INTO receipt_item(Receipt_Id, Item_Id)
-VALUES (3, 4);
+INSERT INTO receipt_item(Receipt_Id, Item_Id, Quantity)
+VALUES (3, 4, 2);
 
 INSERT INTO image(Item_Id, Image_Name, Serial_Number, Image_Path)
 VALUES (1, 'Asus_Phoenix_GTX_1050tTi_1.jpeg', 1, '/resources/images/');

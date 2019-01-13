@@ -5,6 +5,7 @@ require_once("view/navbar.php")
 <script>
     var itemId = "<?php echo (isset($_GET['itemId']) ? $_GET['itemId'] : 0)?>";
     var BASE_URL = "<?php echo BASE_URL ?>";
+    var item = <?php echo json_encode($variables) ?> ;
 </script>
 <div class="container">
     <div align="center">
@@ -16,21 +17,21 @@ require_once("view/navbar.php")
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Name</label>
             <div class="input-group col-sm-10">
-                <input type="text" class="form-control" name="itemName" value="<?php if(isset($variables['Item_Name'])) echo $variables['Item_Name']?>">
+                <input type="text" class="form-control" name="itemName">
             </div>
         </div>
         <!--Item price-->
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Price</label>
             <div class="input-group col-sm-10">
-                <input type="text" class="form-control" name="itemPrice" value="<?php if(isset($variables['Item_Price'])) echo $variables['Item_Price']?>">
+                <input type="text" class="form-control" name="itemPrice">
             </div>
         </div>
         <!--Item description-->
         <div class="form-group row">
             <label class="col-sm-2 col-form-label">Description</label>
             <div class="input-group col-sm-10">
-                <textarea id="textarea" class="form-control" name="description"><?php if(isset($variables['Item_Description'])) echo $variables['Item_Description']?></textarea>
+                <textarea id="textarea" class="form-control" name="description"></textarea>
             </div>
         </div>
     </fieldset>
