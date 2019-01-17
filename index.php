@@ -1,7 +1,7 @@
 <?php
 
 // enables sessions
-session_start();
+//session_start();
 
 require_once("controller/itemController.php");
 require_once("controller/itemRESTController.php");
@@ -32,6 +32,7 @@ $urls = [
         UserController::signUp();
     },
     "/^signupRedirect$/" => function () {
+        utils::use_HTTPS();
         echo ViewHelper::render("view/signUp.view.php");
     },
     "/^signout$/" => function() {
