@@ -1,7 +1,7 @@
 <?php
 
 // enables sessions
-//session_start();
+session_start();
 
 require_once("controller/itemController.php");
 require_once("controller/itemRESTController.php");
